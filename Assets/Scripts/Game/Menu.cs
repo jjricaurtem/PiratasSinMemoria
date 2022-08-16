@@ -6,14 +6,17 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     [SerializeField] private float menuAnimationTime;
+    [SerializeField] private float menuHeightOffset = 182f;
+    [SerializeField] private float menuHeight = 600f;
     [SerializeField] private GameEventChannel gameEventChannel;
     [SerializeField] private Button closeMenuButton;
     [SerializeField] private Slider audioVolumenSlider;
     [SerializeField] private AudioClip openMenuAudioClip;
     [SerializeField] private AudioClip closeMenuAudioClip;
+    [SerializeField] private Canvas canvas;
 
-    private Vector3 _closePosition;
-    private Vector3 _openPosition;
+    private float _closeYPosition = -418f;
+    private float _openYPosition = 0f;
     private bool _isAnimating = false;
     private bool _isOpen = false;
     private AudioSource _audioSource;
@@ -39,29 +42,31 @@ public class Menu : MonoBehaviour
         _isAnimating = true;
 
         float time = 0;
-        var startPosition = _isOpen ? _openPosition : _closePosition;
-        var targetPosition = _isOpen ? _closePosition : _openPosition;
+        var startPosition = transform.position.y;
+        var targetPosition = _isOpen ? GetScreenScaledCloseMenuYposition() : _openYPosition;
         gameEventChannel.GamePause(!_isOpen);
         while (_isAnimating)
         {
             time += Time.deltaTime / menuAnimationTime;
-            var yMovement = Mathf.Lerp(startPosition.y, targetPosition.y, time);
+            var yMovement = Mathf.Lerp(startPosition, targetPosition, time);
             transform.position = new Vector3(transform.position.x, yMovement, transform.position.z);
-            _isAnimating = !Mathf.Approximately(transform.position.y, targetPosition.y);
+            _isAnimating = !Mathf.Approximately(transform.position.y, targetPosition);
             yield return null;
         }
         _isOpen = !_isOpen;
         closeMenuButton.gameObject.SetActive(_isOpen);
     }
 
+
+    private float GetScreenScaledCloseMenuYposition()
+    {
+        return _closeYPosition * canvas.transform.localScale.y;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         closeMenuButton.gameObject.SetActive(false);
-        _closePosition = transform.position;
-
-        _openPosition = _closePosition;
-        _openPosition.y = 1f;
 
         _audioSource = GetComponent<AudioSource>();
         audioVolumenSlider.value = AudioListener.volume;

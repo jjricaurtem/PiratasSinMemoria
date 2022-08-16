@@ -315,7 +315,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1980, y: 1024}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1684,11 +1684,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuAnimationTime: 0.2
+  menuHeightOffset: 182
+  menuHeight: 600
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   closeMenuButton: {fileID: 1016353677}
   audioVolumenSlider: {fileID: 2060087583}
   openMenuAudioClip: {fileID: 8300000, guid: c55b5434b1c222648a6ddc17d5139a60, type: 3}
   closeMenuAudioClip: {fileID: 8300000, guid: 78b345fb566ed81499d7bb01fa5c15bd, type: 3}
+  canvas: {fileID: 186020442}
 --- !u!114 &992457416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3547,11 +3550,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuAnimationTime: 0
+  menuHeightOffset: 182
+  menuHeight: 600
   gameEventChannel: {fileID: 0}
   closeMenuButton: {fileID: 0}
   audioVolumenSlider: {fileID: 0}
   openMenuAudioClip: {fileID: 0}
   closeMenuAudioClip: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!4 &2130116891 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6378300057643202173, guid: 3166c8e5200397d408bfe4db4620ed76,
