@@ -79,6 +79,6 @@ public class Menu : MonoBehaviour
 
     public void OnRestart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 }

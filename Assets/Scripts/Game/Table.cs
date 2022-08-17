@@ -10,10 +10,12 @@ public class Table : MonoBehaviour
 {
     [SerializeField] private CardSo[] availableCards;
     [SerializeField] private CardEventChannel cardEventChannel;
+    [SerializeField] private GameEventChannel gameEventChannel;
     [SerializeField] private int cardsAmount;
     [SerializeField] private float cardDealSpeedInSeconds;
     [SerializeField] private AudioClip[] errorAudioClips;
     [SerializeField] private AudioClip[] matchAudioClips;
+    private int _cardsMatched;
     private Card[] _cards;
     private CardData _currentCardUp;
     private AudioSource _audioSource;
@@ -21,6 +23,7 @@ public class Table : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        _cardsMatched = 0;
         _cards = GetComponentsInChildren<Card>();
         _audioSource = GetComponent<AudioSource>();
         ResetBoard();
@@ -78,8 +81,10 @@ public class Table : MonoBehaviour
             var currentCardName = _currentCardUp.CardSo.cardName;
             if (currentCardName.Equals(cardData.CardSo.cardName))
             {
+                _cardsMatched += 2;
                 cardEventChannel.OnMarkCardsMatched?.Invoke(currentCardName);
                 _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
+                if(_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
             }
             else
             {
