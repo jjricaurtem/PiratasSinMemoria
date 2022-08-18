@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     [SerializeField] private float menuAnimationTime;
-    [SerializeField] private float menuHeightOffset = 182f;
-    [SerializeField] private float menuHeight = 600f;
     [SerializeField] private GameEventChannel gameEventChannel;
     [SerializeField] private Button closeMenuButton;
     [SerializeField] private Slider audioVolumenSlider;

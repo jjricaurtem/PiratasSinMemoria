@@ -513,6 +513,12 @@ Transform:
   m_Father: {fileID: 1803322584}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &294496491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7268449355162677545, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1743450174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,12 +1085,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5533728284842087509}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &456751587 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8323394270240052445, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
-    type: 3}
-  m_PrefabInstance: {fileID: 5533728284842087509}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &526353329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1419,10 +1419,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
-  coinsAnimators:
-  - {fileID: 456751587}
-  - {fileID: 1376543254}
-  - {fileID: 2065543888}
+  coins:
+  - {fileID: 1233249147}
+  - {fileID: 1900309790}
+  - {fileID: 294496491}
 --- !u!4 &625757640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6378300057643202173, guid: 3166c8e5200397d408bfe4db4620ed76,
@@ -2744,6 +2744,12 @@ Transform:
   m_Father: {fileID: 1803322584}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1233249147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7268449355162677545, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
+    type: 3}
+  m_PrefabInstance: {fileID: 5533728284842087509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1299282032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,12 +2916,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374048809}
   m_CullTransparentMesh: 1
---- !u!95 &1376543254 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8323394270240052445, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
-    type: 3}
-  m_PrefabInstance: {fileID: 526353329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1376543256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6270266129171519842, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
@@ -3712,6 +3712,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
+--- !u!1 &1900309790 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7268449355162677545, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
+    type: 3}
+  m_PrefabInstance: {fileID: 526353329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1939786555
 GameObject:
   m_ObjectHideFlags: 0
@@ -3847,12 +3853,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!95 &2065543888 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8323394270240052445, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
-    type: 3}
-  m_PrefabInstance: {fileID: 1743450174}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2065543890 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6270266129171519842, guid: 3aea97e20a0b4ec4abc0de66f58a1dea,
