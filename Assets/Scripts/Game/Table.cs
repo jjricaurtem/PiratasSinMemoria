@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-
-
 
 public class Table : MonoBehaviour
 {
@@ -61,15 +58,6 @@ public class Table : MonoBehaviour
         {
             card.Initilize();
             yield return new WaitForSeconds(cardDealSpeedInSeconds);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //ResetBoard();
         }
     }
 

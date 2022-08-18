@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,10 +15,6 @@ public class Card : MonoBehaviour, IPointerClickHandler
     private bool _matched = false;
     private bool _isCardUp = false;
     private CardData _cardData;
-
-    void Start()
-    {
-    }
 
     public void SetVisible(bool visible)
     {
@@ -40,11 +34,10 @@ public class Card : MonoBehaviour, IPointerClickHandler
         _animator.SetTrigger("Start");
     }
 
-    void CardAnimationStarted()
+    public void CardAnimationStarted()
     {
         SetVisible(true);
         _audioSource.Play();
-        //cardEventChannel.OnInitializationAnimationStarted?.Invoke(index + 1);
     }
 
     private void OnEnable()

@@ -13,8 +13,8 @@ public class Menu : MonoBehaviour
     [SerializeField] private AudioClip closeMenuAudioClip;
     [SerializeField] private Canvas canvas;
 
-    private float _closeYPosition = -418f;
-    private float _openYPosition = 0f;
+    private readonly float _closeYPosition = -418f;
+    private readonly float _openYPosition = 0f;
     private bool _isAnimating = false;
     private bool _isOpen = false;
     private AudioSource _audioSource;
