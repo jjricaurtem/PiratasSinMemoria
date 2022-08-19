@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34064ab335a8f4d4281406d4380d921e, type: 3}
-  m_Name: Pulpo_CardSo
+  m_Name: Barco_CardSo
   m_EditorClassIdentifier: 
-  cardName: pulpo
-  sprite: {fileID: 21300000, guid: c359877c3ddf3854b9f2220128f06e08, type: 3}
+  cardName: barco
+  sprite: {fileID: 21300000, guid: 98c92091172157342b280ba081d92782, type: 3}

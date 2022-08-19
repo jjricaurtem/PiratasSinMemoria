@@ -2032,8 +2032,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuAnimationTime: 0.2
-  menuHeightOffset: 182
-  menuHeight: 600
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   closeMenuButton: {fileID: 1016353677}
   audioVolumenSlider: {fileID: 2060087583}
@@ -3476,6 +3474,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97d8d8b2718b29644a09ece7e28ba2bb, type: 2}
   - {fileID: 11400000, guid: b20f19d849a58d24495c611e36069416, type: 2}
   - {fileID: 11400000, guid: 95bf776900bd4584f9a259fe0e44525e, type: 2}
+  - {fileID: 11400000, guid: eb24015a0523e2a4a83d2b0424caa09b, type: 2}
   cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   cardsAmount: 8
