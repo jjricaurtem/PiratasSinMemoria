@@ -6,6 +6,8 @@ public class MobileBrowserCheck : MonoBehaviour
 
     void Start()
     {
+#if !UNITY_ANDROID
         gameObjectToHide.SetActive(Application.isMobilePlatform);
+#endif
     }
 }
