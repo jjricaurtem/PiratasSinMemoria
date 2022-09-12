@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pulpo_CardSo
   m_EditorClassIdentifier: 
   cardName: pulpo
-  sprite: {fileID: 21300000, guid: c359877c3ddf3854b9f2220128f06e08, type: 3}
+  sprite: {fileID: 21300000, guid: 410a10ea9cef6f44585f5705cfebdc6e, type: 3}
