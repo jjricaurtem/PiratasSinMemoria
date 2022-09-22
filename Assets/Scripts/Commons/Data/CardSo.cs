@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NAME_CardSo", menuName = "MemorylessPirates/Card/CardSo")]
-public class CardSo : ScriptableObject
+namespace Commons.Data
 {
-    public string cardName;
-    public Sprite sprite;
+    [CreateAssetMenu(fileName = "NAME_CardSo", menuName = "MemoryLessPirates/Card/CardSo")]
+    public class CardSo : ScriptableObject
+    {
+        public string cardName;
+        public Sprite sprite;
+    }
 }

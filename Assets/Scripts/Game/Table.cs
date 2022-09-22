@@ -1,90 +1,98 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Commons.Data;
+using Commons.Events;
 using UnityEngine;
 
-public class Table : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private CardSo[] availableCards;
-    [SerializeField] private CardEventChannel cardEventChannel;
-    [SerializeField] private GameEventChannel gameEventChannel;
-    [SerializeField] private int cardsAmount;
-    [SerializeField] private float cardDealSpeedInSeconds;
-    [SerializeField] private AudioClip[] errorAudioClips;
-    [SerializeField] private AudioClip[] matchAudioClips;
-    private int _cardsMatched;
-    private Card[] _cards;
-    private CardData _currentCardUp;
-    private AudioSource _audioSource;
-
-    // Use this for initialization
-    void Start()
+    public class Table : MonoBehaviour
     {
-        _cardsMatched = 0;
-        _cards = GetComponentsInChildren<Card>();
-        _audioSource = GetComponent<AudioSource>();
-        ResetBoard();
-    }
+        [SerializeField] private CardSo[] availableCards;
+        [SerializeField] private CardEventChannel cardEventChannel;
+        [SerializeField] private GameEventChannel gameEventChannel;
+        [SerializeField] private int cardsAmount;
+        [SerializeField] private float cardDealSpeedInSeconds;
+        [SerializeField] private AudioClip[] errorAudioClips;
+        [SerializeField] private AudioClip[] matchAudioClips;
+        private AudioSource _audioSource;
+        private Card.Card[] _cards;
+        private int _cardsMatched;
+        private CardData _currentCardUp;
 
-    private void ResetBoard()
-    {
-        foreach (Card card in _cards) card.SetVisible(false);
-        RandomizeCards();
-        StartCoroutine(DealCards());
-
-    }
-
-    private void RandomizeCards()
-    {
-        IList<CardSo> finalCards = new List<CardSo>(cardsAmount);
-        IList<CardSo> temporalAvailableCards = new List<CardSo>(availableCards);
-
-        for (int i = 0; i < cardsAmount; i += 2)
+        // Use this for initialization
+        private void Start()
         {
-            int availableCardIndex = Random.Range(0, temporalAvailableCards.Count);
-            var cardSo = temporalAvailableCards[availableCardIndex];
-            finalCards.Add(cardSo);
-            finalCards.Add(cardSo);
-            temporalAvailableCards.RemoveAt(availableCardIndex);
+            _cardsMatched = 0;
+            _cards = GetComponentsInChildren<Card.Card>();
+            _audioSource = GetComponent<AudioSource>();
+            ResetBoard();
         }
-        var shuffledCards = finalCards.OrderBy(a => Random.value).ToList();
 
-        for (int i = 0; i < _cards.Length; i++) _cards[i].InitialData(new CardData(i, shuffledCards[i]));
-    }
+        private void OnEnable() => cardEventChannel.OnCardTurnedUp += OnCardTurnedUp;
+        private void OnDestroy() => cardEventChannel.OnCardTurnedUp -= OnCardTurnedUp;
 
-    IEnumerator DealCards()
-    {
-        foreach (Card card in _cards)
+        private void ResetBoard()
         {
-            card.Initilize();
-            yield return new WaitForSeconds(cardDealSpeedInSeconds);
+            foreach (var card in _cards) card.SetVisible(false);
+            RandomizeCards();
+            StartCoroutine(DealCards());
         }
-    }
 
-    private void OnCardTurnedUp(CardData cardData)
-    {
-        if (_currentCardUp == null) _currentCardUp = cardData;
-        else
+        private void RandomizeCards()
         {
-            var currentCardName = _currentCardUp.CardSo.cardName;
-            if (currentCardName.Equals(cardData.CardSo.cardName))
+            IList<CardSo> finalCards = new List<CardSo>(cardsAmount);
+            IList<CardSo> temporalAvailableCards = new List<CardSo>(availableCards);
+
+            for (var i = 0; i < cardsAmount; i += 2)
             {
-                _cardsMatched += 2;
-                cardEventChannel.OnMarkCardsMatched?.Invoke(currentCardName);
-                _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
-                if(_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
+                var availableCardIndex = Random.Range(0, temporalAvailableCards.Count);
+                var cardSo = temporalAvailableCards[availableCardIndex];
+                finalCards.Add(cardSo);
+                finalCards.Add(cardSo);
+                temporalAvailableCards.RemoveAt(availableCardIndex);
+            }
+
+            var shuffledCards = finalCards.OrderBy(_ => Random.value).ToList();
+
+            for (var i = 0; i < _cards.Length; i++) _cards[i].InitialData(new CardData(i, shuffledCards[i]));
+        }
+
+        private IEnumerator DealCards()
+        {
+            foreach (var card in _cards)
+            {
+                card.Initialize();
+                yield return new WaitForSeconds(cardDealSpeedInSeconds);
+            }
+        }
+
+        private void OnCardTurnedUp(CardData cardData)
+        {
+            if (_currentCardUp == null)
+            {
+                _currentCardUp = cardData;
             }
             else
             {
-                cardEventChannel.OnCardTurnedDown?.Invoke();
-                _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
+                var currentCardName = _currentCardUp.CardSo.cardName;
+                if (currentCardName.Equals(cardData.CardSo.cardName))
+                {
+                    _cardsMatched += 2;
+                    cardEventChannel.OnMarkCardsMatched?.Invoke(currentCardName);
+                    _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
+                    if (_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
+                }
+                else
+                {
+                    cardEventChannel.OnCardTurnedDown?.Invoke();
+                    _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
+                }
+
+                _audioSource.Play();
+                _currentCardUp = null;
             }
-            _audioSource.Play();
-            _currentCardUp = null;
         }
     }
-
-    private void OnEnable() => cardEventChannel.OnCardTurnedUp += OnCardTurnedUp;
-    private void OnDestroy() => cardEventChannel.OnCardTurnedUp -= OnCardTurnedUp;
-
 }

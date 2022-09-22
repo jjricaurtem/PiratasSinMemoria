@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class CardData
+﻿namespace Commons.Data
 {
-
-    public int cardId;
-    public CardSo CardSo;
-
-    public CardData(int cardId, CardSo cardSo)
+    public class CardData
     {
-        this.cardId = cardId;
-        CardSo = cardSo;
+        public readonly int CardId;
+        public readonly CardSo CardSo;
+
+        public CardData(int cardId, CardSo cardSo)
+        {
+            CardId = cardId;
+            CardSo = cardSo;
+        }
     }
-
-
 }

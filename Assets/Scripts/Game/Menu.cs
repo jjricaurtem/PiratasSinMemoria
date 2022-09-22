@@ -1,82 +1,88 @@
 ﻿using System.Collections;
+using Commons.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private float menuAnimationTime;
-    [SerializeField] private GameEventChannel gameEventChannel;
-    [SerializeField] private Button closeMenuButton;
-    [SerializeField] private Slider audioVolumenSlider;
-    [SerializeField] private AudioClip openMenuAudioClip;
-    [SerializeField] private AudioClip closeMenuAudioClip;
-    [SerializeField] private Canvas canvas;
-
-    private readonly float _closeYPosition = -418f;
-    private readonly float _openYPosition = 0f;
-    private bool _isAnimating = false;
-    private bool _isOpen = false;
-    private AudioSource _audioSource;
-
-    public void CloseMenuButton_clicked()
+    public class Menu : MonoBehaviour
     {
-        if (_isAnimating) return;
-        _audioSource.clip = closeMenuAudioClip;
-        _audioSource.Play();
-        StartCoroutine(SwitchMenuDisplayMode());
-    }
+        [SerializeField] private float menuAnimationTime;
+        [SerializeField] private GameEventChannel gameEventChannel;
+        [SerializeField] private Button closeMenuButton;
+        [SerializeField] private Slider audioVolumeSlider;
+        [SerializeField] private AudioClip openMenuAudioClip;
+        [SerializeField] private AudioClip closeMenuAudioClip;
+        [SerializeField] private Canvas canvas;
 
-    public void OnMenuClickHandler()
-    {
-        if (_isAnimating || _isOpen) return;
-        _audioSource.clip = openMenuAudioClip;
-        _audioSource.Play();
-        StartCoroutine(SwitchMenuDisplayMode());
-    }
+        private const float CloseYPosition = -418f;
+        private const float OpenYPosition = 0f;
+        private bool _isAnimating;
+        private bool _isOpen;
+        private AudioSource _audioSource;
 
-    private IEnumerator SwitchMenuDisplayMode()
-    {
-        _isAnimating = true;
-
-        float time = 0;
-        var startPosition = transform.position.y;
-        var targetPosition = _isOpen ? GetScreenScaledCloseMenuYposition() : _openYPosition;
-        gameEventChannel.GamePause(!_isOpen);
-        while (_isAnimating)
+        public void CloseMenuButton_clicked()
         {
-            time += Time.deltaTime / menuAnimationTime;
-            var yMovement = Mathf.Lerp(startPosition, targetPosition, time);
-            transform.position = new Vector3(transform.position.x, yMovement, transform.position.z);
-            _isAnimating = !Mathf.Approximately(transform.position.y, targetPosition);
-            yield return null;
+            if (_isAnimating) return;
+            _audioSource.clip = closeMenuAudioClip;
+            _audioSource.Play();
+            StartCoroutine(SwitchMenuDisplayMode());
         }
-        _isOpen = !_isOpen;
-        closeMenuButton.gameObject.SetActive(_isOpen);
-    }
+
+        public void OnMenuClickHandler()
+        {
+            if (_isAnimating || _isOpen) return;
+            _audioSource.clip = openMenuAudioClip;
+            _audioSource.Play();
+            StartCoroutine(SwitchMenuDisplayMode());
+        }
+
+        private IEnumerator SwitchMenuDisplayMode()
+        {
+            _isAnimating = true;
+
+            float time = 0;
+            var startPosition = transform.position.y;
+            var targetPosition = _isOpen ? GetScreenScaledCloseMenuYPosition() : OpenYPosition;
+            gameEventChannel.GamePause(!_isOpen);
+            while (_isAnimating)
+            {
+                time += Time.deltaTime / menuAnimationTime;
+                var yMovement = Mathf.Lerp(startPosition, targetPosition, time);
+                var currentTransform = transform;
+                var currentPosition = currentTransform.position;
+                currentTransform.position = new Vector3(currentPosition.x, yMovement, currentPosition.z);
+                _isAnimating = !Mathf.Approximately(yMovement, targetPosition);
+                yield return null;
+            }
+            _isOpen = !_isOpen;
+            closeMenuButton.gameObject.SetActive(_isOpen);
+        }
 
 
-    private float GetScreenScaledCloseMenuYposition()
-    {
-        return _closeYPosition * canvas.transform.localScale.y;
-    }
+        private float GetScreenScaledCloseMenuYPosition()
+        {
+            return CloseYPosition * canvas.transform.localScale.y;
+        }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        closeMenuButton.gameObject.SetActive(false);
+        // Start is called before the first frame update
+        private void Start()
+        {
+            closeMenuButton.gameObject.SetActive(false);
 
-        _audioSource = GetComponent<AudioSource>();
-        audioVolumenSlider.value = AudioListener.volume;
-    }
+            _audioSource = GetComponent<AudioSource>();
+            audioVolumeSlider.value = AudioListener.volume;
+        }
 
-    public void OnAudioVolumenChange()
-    {
-        AudioListener.volume = audioVolumenSlider.value;
-    }
+        public void OnAudioVolumeChange()
+        {
+            AudioListener.volume = audioVolumeSlider.value;
+        }
 
-    public void OnRestart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        public void OnRestart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        }
     }
 }

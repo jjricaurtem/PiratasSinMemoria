@@ -2083,7 +2083,7 @@ MonoBehaviour:
   menuAnimationTime: 0.2
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   closeMenuButton: {fileID: 1016353677}
-  audioVolumenSlider: {fileID: 2060087583}
+  audioVolumeSlider: {fileID: 2060087583}
   openMenuAudioClip: {fileID: 8300000, guid: c55b5434b1c222648a6ddc17d5139a60, type: 3}
   closeMenuAudioClip: {fileID: 8300000, guid: 78b345fb566ed81499d7bb01fa5c15bd, type: 3}
   canvas: {fileID: 186020442}
@@ -4208,7 +4208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 992457415}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: OnAudioVolumenChange
+        m_MethodName: OnAudioVolumeChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

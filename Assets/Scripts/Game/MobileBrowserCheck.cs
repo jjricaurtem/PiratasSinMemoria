@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class MobileBrowserCheck : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameObject gameObjectToHide;
-
-    void Start()
+    public class MobileBrowserCheck : MonoBehaviour
     {
+        [SerializeField] private GameObject gameObjectToHide;
+
+        private void Start()
+        {
 #if !UNITY_ANDROID
         gameObjectToHide.SetActive(Application.isMobilePlatform);
 #endif
+        }
     }
 }

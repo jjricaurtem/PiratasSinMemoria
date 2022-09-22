@@ -1,26 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using Commons.Events;
 using UnityEngine;
 
-public class Coins : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private CardEventChannel cardEventChannel;
-    [SerializeField] private GameEventChannel gameEventChannel;
-    [SerializeField] private GameObject[] coins;
-    private int _currentCoinIndex = 0;
-    void Start()
+    public class Coins : MonoBehaviour
     {
-        _currentCoinIndex = 0;
-    }
+        [SerializeField] private CardEventChannel cardEventChannel;
+        [SerializeField] private GameEventChannel gameEventChannel;
+        [SerializeField] private GameObject[] coins;
+        private int _currentCoinIndex;
+        private static readonly int RemoveCoin = Animator.StringToHash("RemoveCoin");
 
-    private void OnEnable() => cardEventChannel.OnCardTurnedDown += OnCardTurnedDown;
-    private void OnDisable() => cardEventChannel.OnCardTurnedDown -= OnCardTurnedDown;
+        void Start()
+        {
+            _currentCoinIndex = 0;
+        }
 
-    private void OnCardTurnedDown()
-    {
-        if (_currentCoinIndex >= coins.Length) return;
-        coins[_currentCoinIndex].GetComponent<Animator>().SetTrigger("RemoveCoin");
-        _currentCoinIndex++;
-        if (_currentCoinIndex >= coins.Length) gameEventChannel.GameEnd(false);
+        private void OnEnable() => cardEventChannel.OnCardTurnedDown += OnCardTurnedDown;
+        private void OnDisable() => cardEventChannel.OnCardTurnedDown -= OnCardTurnedDown;
+
+        private void OnCardTurnedDown()
+        {
+            if (_currentCoinIndex >= coins.Length) return;
+            coins[_currentCoinIndex].GetComponent<Animator>().SetTrigger(RemoveCoin);
+            _currentCoinIndex++;
+            if (_currentCoinIndex >= coins.Length) gameEventChannel.GameEnd(false);
+        }
     }
 }
