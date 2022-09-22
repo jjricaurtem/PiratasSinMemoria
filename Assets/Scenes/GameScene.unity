@@ -158,7 +158,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.54
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -3798,10 +3798,8 @@ MonoBehaviour:
   availableCards:
   - {fileID: 11400000, guid: 1885fa1585c17e84391a2539a68fb888, type: 2}
   - {fileID: 11400000, guid: a9a979be6aa727c4ba0caf26e0e3aef3, type: 2}
-  - {fileID: 11400000, guid: 97d8d8b2718b29644a09ece7e28ba2bb, type: 2}
-  - {fileID: 11400000, guid: b20f19d849a58d24495c611e36069416, type: 2}
-  - {fileID: 11400000, guid: 95bf776900bd4584f9a259fe0e44525e, type: 2}
-  - {fileID: 11400000, guid: eb24015a0523e2a4a83d2b0424caa09b, type: 2}
+  - {fileID: 11400000, guid: 7d1b9330d54830d4b80b159220077f87, type: 2}
+  - {fileID: 11400000, guid: 2eae4b8dbdd0c0c49a65a1a82fbbdf73, type: 2}
   cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   cardsAmount: 8
@@ -4018,8 +4016,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900199057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.26909}
-  m_LocalScale: {x: 383.41275, y: 237.13605, z: 1}
+  m_LocalPosition: {x: -4.5413, y: 0, z: 7.26909}
+  m_LocalScale: {x: 540.5091, y: 237.13605, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4399,7 +4397,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 0.86910975, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
