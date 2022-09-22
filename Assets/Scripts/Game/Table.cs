@@ -19,7 +19,9 @@ namespace Game
         private AudioSource _audioSource;
         private Card.Card[] _cards;
         private int _cardsMatched;
+        private int _cardsReady;
         private CardData _currentCardUp;
+        private bool _isTableInitialized;
 
         // Use this for initialization
         private void Start()
@@ -30,12 +32,23 @@ namespace Game
             ResetBoard();
         }
 
-        private void OnEnable() => cardEventChannel.OnCardTurnedUp += OnCardTurnedUp;
-        private void OnDestroy() => cardEventChannel.OnCardTurnedUp -= OnCardTurnedUp;
+        private void OnEnable()
+        {
+            cardEventChannel.OnCardTurnedUp += OnCardTurnedUp;
+            cardEventChannel.OnCardReady += OnCardReady;
+        }
+
+        private void OnDestroy()
+        {
+            cardEventChannel.OnCardTurnedUp -= OnCardTurnedUp;
+            cardEventChannel.OnCardReady -= OnCardReady;
+        }
 
         private void ResetBoard()
         {
             foreach (var card in _cards) card.SetVisible(false);
+            _cardsReady = 0;
+            _isTableInitialized = false;
             RandomizeCards();
             StartCoroutine(DealCards());
         }
@@ -72,11 +85,13 @@ namespace Game
         {
             if (_currentCardUp == null)
             {
+                cardEventChannel.CardsInteractionActive(true);
                 _currentCardUp = cardData;
             }
             else
             {
                 var currentCardName = _currentCardUp.CardSo.cardName;
+                cardEventChannel.CardsInteractionActive(false);
                 if (currentCardName.Equals(cardData.CardSo.cardName))
                 {
                     _cardsMatched += 2;
@@ -93,6 +108,16 @@ namespace Game
                 _audioSource.Play();
                 _currentCardUp = null;
             }
+        }
+
+        private void OnCardReady()
+        {
+            _cardsReady++;
+            if (_isTableInitialized) return;
+            if (_cardsReady < cardsAmount) return;
+            cardEventChannel.CardsInteractionActive(true);
+            _isTableInitialized = true;
+            _cardsReady = 0;
         }
     }
 }
