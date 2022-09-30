@@ -16,8 +16,8 @@ namespace Game
         [SerializeField] private AudioClip openMenuAudioClip;
         [SerializeField] private AudioClip closeMenuAudioClip;
         [SerializeField] private Canvas canvas;
+        [SerializeField] private float closeYPosition = -300f;
 
-        private float _closeYPosition = -418f;
         private const float OpenYPosition = 0f;
         private bool _isAnimating;
         private bool _isOpen;
@@ -64,15 +64,14 @@ namespace Game
 
         private float GetScreenScaledCloseMenuYPosition()
         {
-            // return _closeYPosition * canvas.transform.localScale.y;
-            return _closeYPosition;
+            return closeYPosition * canvas.transform.localScale.y;
         }
 
         // Start is called before the first frame update
         private void Start()
         {
             closeMenuButton.gameObject.SetActive(false);
-            _closeYPosition = transform.position.y;
+            // _closeYPosition = transform.position.y;
 
             _audioSource = GetComponent<AudioSource>();
             audioVolumeSlider.value = AudioListener.volume;
