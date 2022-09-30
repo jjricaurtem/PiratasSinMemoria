@@ -21,6 +21,7 @@ namespace Card
         public CardEventChannel cardEventChannel;
         [SerializeField] private int cardId;
         [SerializeField] private AudioClip[] cardClickedAudioClips;
+        [SerializeField] private GameObject cardSelectionObject;
 
         private Animator _animator;
         private AudioSource _audioSource;
@@ -28,6 +29,7 @@ namespace Card
         private SpriteRenderer _frontSpriteRenderer;
         private bool _interactionEnable;
         private bool _isCardUp;
+        private bool _isSelected;
         private bool _matched;
         private SpriteRenderer[] _spriteRenderers;
 
@@ -43,6 +45,7 @@ namespace Card
             cardEventChannel.OnCardTurnedDown += OnCardTurnedDown;
             cardEventChannel.OnMarkCardsMatched += OnMarkCardsMatched;
             cardEventChannel.OnCardsInteractionActivation += OnCardsInteractionActivation;
+            cardEventChannel.OnCardHover += OnCardHover;
         }
 
         private void OnDestroy()
@@ -50,6 +53,7 @@ namespace Card
             cardEventChannel.OnCardTurnedDown -= OnCardTurnedDown;
             cardEventChannel.OnMarkCardsMatched -= OnMarkCardsMatched;
             cardEventChannel.OnCardsInteractionActivation -= OnCardsInteractionActivation;
+            cardEventChannel.OnCardHover -= OnCardHover;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -61,6 +65,8 @@ namespace Card
             _animator.SetTrigger(TurnCardSideUp);
             _isCardUp = true;
         }
+
+        private void OnCardHover(int hoverCardId) => cardSelectionObject.SetActive(hoverCardId == cardId);
 
         public void SetVisible(bool visible)
         {
@@ -100,10 +106,7 @@ namespace Card
             _animator.SetTrigger(RemoveCard);
         }
 
-        public void OnAnimationEnds(string animationName)
-        {
-            OnAnimationEnds(Animator.StringToHash(animationName));
-        }
+        public void OnAnimationEnds(string animationName) => OnAnimationEnds(Animator.StringToHash(animationName));
 
         public void OnAnimationEnds(int animationNameHash)
         {

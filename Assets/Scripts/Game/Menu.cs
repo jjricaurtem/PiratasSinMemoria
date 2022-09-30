@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Commons.Events;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ namespace Game
         [SerializeField] private AudioClip closeMenuAudioClip;
         [SerializeField] private Canvas canvas;
 
-        private const float CloseYPosition = -418f;
+        private float _closeYPosition = -418f;
         private const float OpenYPosition = 0f;
         private bool _isAnimating;
         private bool _isOpen;
@@ -63,13 +64,15 @@ namespace Game
 
         private float GetScreenScaledCloseMenuYPosition()
         {
-            return CloseYPosition * canvas.transform.localScale.y;
+            // return _closeYPosition * canvas.transform.localScale.y;
+            return _closeYPosition;
         }
 
         // Start is called before the first frame update
         private void Start()
         {
             closeMenuButton.gameObject.SetActive(false);
+            _closeYPosition = transform.position.y;
 
             _audioSource = GetComponent<AudioSource>();
             audioVolumeSlider.value = AudioListener.volume;

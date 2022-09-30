@@ -44,6 +44,11 @@ namespace Game
             cardEventChannel.OnCardReady -= OnCardReady;
         }
 
+        public void SelectCard(int index)
+        {
+            _cards[index].OnPointerClick(null);
+        }
+
         private void ResetBoard()
         {
             foreach (var card in _cards) card.SetVisible(false);

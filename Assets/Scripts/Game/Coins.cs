@@ -5,13 +5,13 @@ namespace Game
 {
     public class Coins : MonoBehaviour
     {
+        private static readonly int RemoveCoin = Animator.StringToHash("RemoveCoin");
         [SerializeField] private CardEventChannel cardEventChannel;
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private GameObject[] coins;
         private int _currentCoinIndex;
-        private static readonly int RemoveCoin = Animator.StringToHash("RemoveCoin");
 
-        void Start()
+        private void Start()
         {
             _currentCoinIndex = 0;
         }
