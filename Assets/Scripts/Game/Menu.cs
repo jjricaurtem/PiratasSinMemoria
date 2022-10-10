@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Commons.Events;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
