@@ -1655,16 +1655,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591050850}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.6, y: 2.75, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.1, y: 1.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1536012767}
   - {fileID: 1939786556}
   - {fileID: 396748376}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 1803322584}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &591050852
 MonoBehaviour:
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49e66ed8e2679a4388e2f72ab6f167c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
+  tableEventChannel: {fileID: 0}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   coins:
   - {fileID: 1233249147}
@@ -2624,7 +2624,6 @@ GameObject:
   - component: {fileID: 1150692246}
   - component: {fileID: 1150692247}
   - component: {fileID: 1150692248}
-  - component: {fileID: 1150692249}
   m_Layer: 5
   m_Name: EndGame
   m_TagString: Untagged
@@ -2775,43 +2774,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1150692249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150692245}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 9ab6c26fa00705f4b9d1ec8f818d3ecd,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-    m_ActionId: 06808a02-eb88-43a7-aa9f-aaf7b5006e21
-    m_ActionName: Default/Move[/XInputControllerWindows/leftStick]
-  - m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 992457415}, m_TargetAssemblyTypeName: Game.Menu, Assembly-CSharp: }
 --- !u!1 &1167227577
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,42 +3774,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1790279423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_EventSystem: {fileID: 0}
-  m_InputOverride: {fileID: 0}
-  m_DefaultInput: {fileID: 0}
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_TrackedDeviceDragThresholdMultiplier: 2
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &1803322582
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,6 +3872,7 @@ Transform:
   - {fileID: 1934092718}
   - {fileID: 316218132}
   - {fileID: 346922670}
+  - {fileID: 591050851}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3955,7 +3893,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a9a979be6aa727c4ba0caf26e0e3aef3, type: 2}
   - {fileID: 11400000, guid: 7d1b9330d54830d4b80b159220077f87, type: 2}
   - {fileID: 11400000, guid: 2eae4b8dbdd0c0c49a65a1a82fbbdf73, type: 2}
-  cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
+  tableEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   cardsAmount: 8
   cardDealSpeedInSeconds: 0.2
@@ -4072,7 +4010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0fcbd181074f3ab6cedfeefe7989de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
+  tableEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   threshold: 0.125
   movementPerformed: 0
