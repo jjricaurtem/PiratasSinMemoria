@@ -1,13 +1,12 @@
 ﻿using Commons.Events;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Game
 {
     public class GamepadController : MonoBehaviour
     {
-        [SerializeField] private CardEventChannel cardEventChannel;
+        [SerializeField] private TableEventChannel tableEventChannel;
         [SerializeField] private GameEventChannel gameEventChannel;
 
         public float threshold = 0.5f;
@@ -15,23 +14,15 @@ namespace Game
         public int lastHoverIndex = -1;
         private int _cardHoverColumnIndex;
         private int _cardHoverRowIndex;
+        private bool _isGameEnd;
         private bool _isInteractable = true;
-        private bool _isGameEnd = false;
-        private Table _table;
+        private Table.Table _table;
 
         private void Start()
         {
-            _table = GetComponent<Table>();
+            _table = GetComponent<Table.Table>();
             _cardHoverColumnIndex = 0;
             _cardHoverRowIndex = 0;
-            InputSystem.onDeviceChange +=
-                (device, change) =>
-                {
-                    if (device.description.deviceClass != "Gamepad") return;
-                    if (change is InputDeviceChange.Added or InputDeviceChange.Reconnected)
-                        cardEventChannel.HoverCard(0);
-                    else cardEventChannel.HoverCard(-1);
-                };
         }
 
         private void OnEnable()
@@ -54,33 +45,41 @@ namespace Game
 
         private void OnPauseEvent(bool isPause) => _isInteractable = isPause;
 
-        public void Move(InputAction.CallbackContext context)
+        private void Update()
+        {
+            Move();
+            SelectCard();
+        }
+
+        private void Move()
         {
             if (!_isInteractable) return;
-            if (context.performed && !movementPerformed)
+            var axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            var performed = axis.magnitude > 0.2;
+            if (performed && !movementPerformed)
             {
-                var axis = context.ReadValue<Vector2>();
                 if (axis.x > threshold && axis.x > 0 && _cardHoverColumnIndex < 3) _cardHoverColumnIndex++;
                 else if (axis.x < threshold * -1 && axis.x < 0 && _cardHoverColumnIndex > 0) _cardHoverColumnIndex--;
                 if (axis.y > threshold && axis.y > 0 && _cardHoverRowIndex > 0) _cardHoverRowIndex--;
                 else if (axis.y < threshold * -1 && axis.y < 0 && _cardHoverRowIndex < 1) _cardHoverRowIndex++;
-
+            
                 var cardHoverIndex = _cardHoverRowIndex * 4 + _cardHoverColumnIndex;
                 if (lastHoverIndex == cardHoverIndex) return;
-                cardEventChannel.HoverCard(cardHoverIndex);
+                tableEventChannel.HoverCard(cardHoverIndex);
                 lastHoverIndex = cardHoverIndex;
                 movementPerformed = true;
             }
-            else if (context.canceled && movementPerformed)
+            else if (!performed && movementPerformed)
             {
                 movementPerformed = false;
             }
         }
 
-        public void SelectCard(InputAction.CallbackContext context)
+        private void SelectCard()
         {
-            if(_isGameEnd) SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-            if (!_isInteractable) return;
+            if (!Input.GetButton("Fire1")) return;
+            if (_isGameEnd) SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            if (!_isInteractable || lastHoverIndex < 0) return;
             _table.SelectCard(lastHoverIndex);
         }
     }
