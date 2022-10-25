@@ -94,7 +94,7 @@ namespace Card
 
         public void MarkCardAsMatched()
         {
-            if (!_matched) return;
+            if (_matched) return;
             _matched = true;
             _animator.SetTrigger(RemoveCard);
         }
