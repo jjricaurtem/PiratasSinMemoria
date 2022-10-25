@@ -1,12 +1,12 @@
 using Commons.Events;
 using UnityEngine;
 
-namespace Game
+namespace Table
 {
     public class Coins : MonoBehaviour
     {
-        private static readonly int RemoveCoin = Animator.StringToHash("RemoveCoin");
-        [SerializeField] private CardEventChannel cardEventChannel;
+        private static readonly int RemoveCoinHash = Animator.StringToHash("RemoveCoin");
+        [SerializeField] private TableEventChannel tableEventChannel;
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private GameObject[] coins;
         private int _currentCoinIndex;
@@ -16,13 +16,10 @@ namespace Game
             _currentCoinIndex = 0;
         }
 
-        private void OnEnable() => cardEventChannel.OnCardTurnedDown += OnCardTurnedDown;
-        private void OnDisable() => cardEventChannel.OnCardTurnedDown -= OnCardTurnedDown;
-
-        private void OnCardTurnedDown()
+        public void RemoveCoin()
         {
             if (_currentCoinIndex >= coins.Length) return;
-            coins[_currentCoinIndex].GetComponent<Animator>().SetTrigger(RemoveCoin);
+            coins[_currentCoinIndex].GetComponent<Animator>().SetTrigger(RemoveCoinHash);
             _currentCoinIndex++;
             if (_currentCoinIndex >= coins.Length) gameEventChannel.GameEnd(false);
         }

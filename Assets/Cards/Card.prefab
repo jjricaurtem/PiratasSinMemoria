@@ -290,8 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1c41f13e5054d48bf98f8e8ea647c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
-  cardId: 0
+  tableEventChannel: {fileID: 11400000, guid: e89d4c82e2080544b8e7e95908886572, type: 2}
   cardClickedAudioClips:
   - {fileID: 8300000, guid: 56837fa78e5c50c4fb23dff93cbc10c8, type: 3}
   - {fileID: 8300000, guid: 3c52b583b14b1024490054687e19ba5e, type: 3}

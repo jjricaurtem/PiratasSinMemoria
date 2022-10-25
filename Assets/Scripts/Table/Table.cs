@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Commons.Data;
+using Card;
 using Commons.Events;
 using UnityEngine;
 
-namespace Game
+namespace Table
 {
     public class Table : MonoBehaviour
     {
         [SerializeField] private CardSo[] availableCards;
-        [SerializeField] private CardEventChannel cardEventChannel;
+        [SerializeField] private TableEventChannel tableEventChannel;
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private int cardsAmount;
         [SerializeField] private float cardDealSpeedInSeconds;
@@ -20,7 +20,8 @@ namespace Game
         private Card.Card[] _cards;
         private int _cardsMatched;
         private int _cardsReady;
-        private CardData _currentCardUp;
+        private Coins _coins;
+        private int _currentCardUpIndex = -1;
         private bool _isTableInitialized;
 
         // Use this for initialization
@@ -29,24 +30,56 @@ namespace Game
             _cardsMatched = 0;
             _cards = GetComponentsInChildren<Card.Card>();
             _audioSource = GetComponent<AudioSource>();
+            _coins = GetComponentInChildren<Coins>();
             ResetBoard();
-        }
-
-        private void OnEnable()
-        {
-            cardEventChannel.OnCardTurnedUp += OnCardTurnedUp;
-            cardEventChannel.OnCardReady += OnCardReady;
-        }
-
-        private void OnDestroy()
-        {
-            cardEventChannel.OnCardTurnedUp -= OnCardTurnedUp;
-            cardEventChannel.OnCardReady -= OnCardReady;
         }
 
         public void SelectCard(int index)
         {
             _cards[index].OnPointerClick(null);
+        }
+
+        public void OnCardTurnedUp(int cardIndex)
+        {
+            if (_currentCardUpIndex < 0)
+            {
+                tableEventChannel.SetCardsInteractionActive(true);
+                _currentCardUpIndex = cardIndex;
+            }
+            else
+            {
+                var currentCardUp = _cards[_currentCardUpIndex];
+                var newCardUp = _cards[cardIndex];
+                tableEventChannel.SetCardsInteractionActive(false);
+                if (newCardUp.IsSameCardSo(currentCardUp))
+                {
+                    _cardsMatched += 2;
+                    currentCardUp.MarkCardAsMatched();
+                    newCardUp.MarkCardAsMatched();
+                    _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
+                    if (_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
+                }
+                else
+                {
+                    currentCardUp.TurnCardDown();
+                    newCardUp.TurnCardDown();
+                    _coins.RemoveCoin();
+                    _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
+                }
+
+                _audioSource.Play();
+                _currentCardUpIndex = -1;
+            }
+        }
+
+        public void OnCardReady()
+        {
+            _cardsReady++;
+            if (_isTableInitialized) return;
+            if (_cardsReady < cardsAmount) return;
+            tableEventChannel.SetCardsInteractionActive(true);
+            _isTableInitialized = true;
+            _cardsReady = 0;
         }
 
         private void ResetBoard()
@@ -74,7 +107,7 @@ namespace Game
 
             var shuffledCards = finalCards.OrderBy(_ => Random.value).ToList();
 
-            for (var i = 0; i < _cards.Length; i++) _cards[i].InitialData(new CardData(i, shuffledCards[i]));
+            for (var i = 0; i < _cards.Length; i++) _cards[i].InitialData(i, shuffledCards[i], this);
         }
 
         private IEnumerator DealCards()
@@ -84,45 +117,6 @@ namespace Game
                 card.Initialize();
                 yield return new WaitForSeconds(cardDealSpeedInSeconds);
             }
-        }
-
-        private void OnCardTurnedUp(CardData cardData)
-        {
-            if (_currentCardUp == null)
-            {
-                cardEventChannel.CardsInteractionActive(true);
-                _currentCardUp = cardData;
-            }
-            else
-            {
-                var currentCardName = _currentCardUp.CardSo.cardName;
-                cardEventChannel.CardsInteractionActive(false);
-                if (currentCardName.Equals(cardData.CardSo.cardName))
-                {
-                    _cardsMatched += 2;
-                    cardEventChannel.OnMarkCardsMatched?.Invoke(currentCardName);
-                    _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
-                    if (_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
-                }
-                else
-                {
-                    cardEventChannel.OnCardTurnedDown?.Invoke();
-                    _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
-                }
-
-                _audioSource.Play();
-                _currentCardUp = null;
-            }
-        }
-
-        private void OnCardReady()
-        {
-            _cardsReady++;
-            if (_isTableInitialized) return;
-            if (_cardsReady < cardsAmount) return;
-            cardEventChannel.CardsInteractionActive(true);
-            _isTableInitialized = true;
-            _cardsReady = 0;
         }
     }
 }
