@@ -1,13 +1,16 @@
 ﻿using Commons.Events;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
     public class EndGameScreen : MonoBehaviour
     {
         private AudioSource _audioSource;
-        [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private Image imageElement;
+        [SerializeField] private Sprite victorySprite;
+        [SerializeField] private Sprite defeatSprite;
         [SerializeField] private AudioClip[] winAudioClips;
         [SerializeField] private AudioClip[] loseAudioClips;
         [SerializeField] private GameObject[] objectsToShow;
@@ -19,7 +22,7 @@ namespace Game
 
         private void OnGameEnd(bool isAWin)
         {
-            text.text = isAWin ? "You Win" : "You Lose";
+            imageElement.sprite = isAWin ? victorySprite : defeatSprite;
             foreach (var gameObjectToShow in objectsToShow) gameObjectToShow.SetActive(true);
 
             var audioClips = isAWin ? winAudioClips : loseAudioClips;
