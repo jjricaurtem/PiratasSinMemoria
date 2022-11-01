@@ -1,11 +1,12 @@
 using System;
 using Commons.Events;
 using JetBrains.Annotations;
+using Tables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-namespace Card
+namespace Cards
 {
     public class Card : MonoBehaviour, IPointerClickHandler
     {
@@ -27,7 +28,7 @@ namespace Card
         private bool _isSelected;
         private bool _matched;
         private SpriteRenderer[] _spriteRenderers;
-        private Table.Table _table;
+        private Table _table;
 
         private void OnEnable()
         {
@@ -65,7 +66,7 @@ namespace Card
             foreach (var spriteRender in _spriteRenderers) spriteRender.enabled = visible;
         }
 
-        public void InitialData(int index, CardSo cardSo, Table.Table table)
+        public void InitialData(int index, CardSo cardSo, Table table)
         {
             _cardSo = cardSo;
             _frontSpriteRenderer.sprite = _cardSo.sprite;

@@ -22,6 +22,11 @@ namespace Game
         private bool _isOpen;
         private AudioSource _audioSource;
 
+        public void ToggleMenu()
+        {
+            if (_isOpen) CloseMenuButton_clicked();
+            else OnMenuClickHandler();
+        }
         public void CloseMenuButton_clicked()
         {
             if (_isAnimating) return;

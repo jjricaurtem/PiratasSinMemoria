@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Card;
+using Cards;
 using Commons.Events;
 using UnityEngine;
 
-namespace Table
+namespace Tables
 {
     public class Table : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace Table
         [SerializeField] private AudioClip[] errorAudioClips;
         [SerializeField] private AudioClip[] matchAudioClips;
         private AudioSource _audioSource;
-        private Card.Card[] _cards;
+        private Card[] _cards;
         private int _cardsMatched;
         private int _cardsReady;
         private Coins _coins;
@@ -28,7 +28,7 @@ namespace Table
         private void Start()
         {
             _cardsMatched = 0;
-            _cards = GetComponentsInChildren<Card.Card>();
+            _cards = GetComponentsInChildren<Cards.Card>();
             _audioSource = GetComponent<AudioSource>();
             _coins = GetComponentInChildren<Coins>();
             ResetBoard();
