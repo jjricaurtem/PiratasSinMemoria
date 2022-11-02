@@ -1,4 +1,5 @@
-﻿using Commons.Events;
+﻿using System;
+using Commons.Events;
 using Game;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,37 +15,28 @@ namespace Tables
 
         public float threshold = 0.5f;
         public bool movementPerformed;
-        public int lastHoverIndex = -1;
-        private int _cardHoverColumnIndex;
-        private int _cardHoverRowIndex;
+        private int _cardHoverIndex;
         private Controls _controls;
         private bool _isGameEnd;
         private bool _isInteractable = true;
-        private Menu _menu;
+        private PapyrusToggle _papyrusToggle;
         private Table _table;
 
         private void Awake()
         {
             _controls = new Controls();
-            _controls.Default.DefaultAction.performed += ctx => SelectCard();
-            _controls.Default.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-            _controls.Default.ToogleMenu.performed += ctx => ToggleMenu();
+            _controls.Default.DefaultAction.performed += _ => SelectCard();
+            _controls.Default.Move.performed += ctx => Move(ctx.ReadValue<Vector2>(), true);
+            _controls.Default.Move.started += ctx => Move(ctx.ReadValue<Vector2>(), true);
+            _controls.Default.Move.canceled += ctx => Move(ctx.ReadValue<Vector2>(), false);
+            _controls.Default.ToogleMenu.performed += _ => ToggleMenu();
         }
 
         private void Start()
         {
             _table = GetComponent<Table>();
-            _menu = FindObjectOfType<Menu>();
-            _cardHoverColumnIndex = 0;
-            _cardHoverRowIndex = 0;
-            // Controls controls = new Controls();
-        }
-
-        private void Update()
-        {
-            // ManageMenu();
-            // Move();
-            // SelectCard();
+            _papyrusToggle = FindObjectOfType<PapyrusToggle>();
+            _cardHoverIndex = -1;
         }
 
         private void OnEnable()
@@ -52,7 +44,7 @@ namespace Tables
             gameEventChannel.OnGameEnd += OnGameEnd;
             gameEventChannel.OnPauseEvent += OnPauseEvent;
             _controls.Default.Enable();
-            InputSystem.onDeviceChange += InputSystemOnonDeviceChange;
+            InputSystem.onDeviceChange += InputSystemOnDeviceChange;
         }
 
         private void OnDisable()
@@ -60,20 +52,24 @@ namespace Tables
             gameEventChannel.OnGameEnd -= OnGameEnd;
             gameEventChannel.OnPauseEvent -= OnPauseEvent;
             _controls.Default.Disable();
-            InputSystem.onDeviceChange -= InputSystemOnonDeviceChange;
+            InputSystem.onDeviceChange -= InputSystemOnDeviceChange;
         }
 
-        private void ToggleMenu() => _menu.ToggleMenu();
+        private void ToggleMenu() => _papyrusToggle.ToggleMenu();
 
-        private void InputSystemOnonDeviceChange(InputDevice device, InputDeviceChange change)
+        private void InputSystemOnDeviceChange(InputDevice device, InputDeviceChange change)
         {
             switch (change)
             {
                 case InputDeviceChange.Added:
                     Debug.Log("New device added: " + device);
+                    _cardHoverIndex = 0;
+                    tableEventChannel.HoverCard(_cardHoverIndex);
                     break;
                 case InputDeviceChange.Removed:
                     Debug.Log("Device removed: " + device);
+                    _cardHoverIndex = -1;
+                    tableEventChannel.HoverCard(_cardHoverIndex);
                     break;
             }
         }
@@ -86,34 +82,67 @@ namespace Tables
 
         private void OnPauseEvent(bool isPause) => _isInteractable = !isPause;
 
-        private void Move(Vector2 axis)
+        private void Move(Vector2 axis, bool performed)
         {
             if (!_isInteractable) return;
-            var performed = axis.magnitude > 0.2;
-            if (performed && !movementPerformed)
+            switch (performed)
             {
-                if (axis.x > threshold && axis.x > 0 && _cardHoverColumnIndex < 3) _cardHoverColumnIndex++;
-                else if (axis.x < threshold * -1 && axis.x < 0 && _cardHoverColumnIndex > 0) _cardHoverColumnIndex--;
-                if (axis.y > threshold && axis.y > 0 && _cardHoverRowIndex > 0) _cardHoverRowIndex--;
-                else if (axis.y < threshold * -1 && axis.y < 0 && _cardHoverRowIndex < 1) _cardHoverRowIndex++;
+                case true when !movementPerformed:
+                {
+                    var columnDirection = 0;
+                    var rowDirection = 0;
+                    // Only move in one direction and not diagonals
+                    if (Math.Abs(axis.x) > Math.Abs(axis.y))
+                    {
+                        if (axis.x > threshold && axis.x > 0) columnDirection++;
+                        else if (axis.x < threshold * -1 && axis.x < 0) columnDirection--;
+                    }
+                    else
+                    {
+                        if (axis.y > threshold && axis.y > 0) rowDirection--;
+                        else if (axis.y < threshold * -1 && axis.y < 0) rowDirection++;
+                    }
 
-                var cardHoverIndex = _cardHoverRowIndex * 4 + _cardHoverColumnIndex;
-                if (lastHoverIndex == cardHoverIndex) return;
-                tableEventChannel.HoverCard(cardHoverIndex);
-                lastHoverIndex = cardHoverIndex;
-                movementPerformed = true;
+                    if (columnDirection == 0 && rowDirection == 0) return;
+                    _cardHoverIndex = FindNextValidCardPosition(_cardHoverIndex, columnDirection, rowDirection);
+                    tableEventChannel.HoverCard(_cardHoverIndex);
+                    movementPerformed = true;
+                    break;
+                }
+                case false:
+                    movementPerformed = false;
+                    break;
             }
-            else if (!performed && movementPerformed)
+        }
+
+        private int FindNextValidCardPosition(int currentIndex, int nextX, int nextY)
+        {
+            while (true)
             {
-                movementPerformed = false;
+                var cardHoverColumnIndex = currentIndex % 4;
+                var cardHoverRowIndex = currentIndex / 4;
+
+                // If its outside of the limits
+                cardHoverColumnIndex += nextX;
+                if (cardHoverColumnIndex is < 0 or > 3) return _cardHoverIndex;
+
+                // If its outside of the limits
+                cardHoverRowIndex += nextY;
+                if (cardHoverRowIndex is < 0 or > 1) return _cardHoverIndex;
+
+                var newIndex = cardHoverRowIndex * 4 + cardHoverColumnIndex;
+                var card = _table.Cards[newIndex];
+                if (!card.Matched) return newIndex;
+
+                currentIndex = newIndex;
             }
         }
 
         private void SelectCard()
         {
             if (_isGameEnd) SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-            if (!_isInteractable || lastHoverIndex < 0) return;
-            _table.SelectCard(lastHoverIndex);
+            if (!_isInteractable || _cardHoverIndex < 0) return;
+            _table.SelectCard(_cardHoverIndex);
         }
     }
 }

@@ -318,8 +318,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 992457415}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+      - m_Target: {fileID: 992457420}
+        m_TargetAssemblyTypeName: Game.GameMenu, Scripts
         m_MethodName: OnRestart
         m_Mode: 1
         m_Arguments:
@@ -2112,6 +2112,7 @@ GameObject:
   - component: {fileID: 992457414}
   - component: {fileID: 992457415}
   - component: {fileID: 992457419}
+  - component: {fileID: 992457420}
   m_Layer: 5
   m_Name: MenuPaper
   m_TagString: Untagged
@@ -2157,9 +2158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuAnimationTime: 0.2
-  gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   closeMenuButton: {fileID: 1016353677}
-  audioVolumeSlider: {fileID: 2060087583}
   openMenuAudioClip: {fileID: 8300000, guid: c55b5434b1c222648a6ddc17d5139a60, type: 3}
   closeMenuAudioClip: {fileID: 8300000, guid: 78b345fb566ed81499d7bb01fa5c15bd, type: 3}
   canvas: {fileID: 186020442}
@@ -2260,6 +2259,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &992457420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992457413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9955b8750aa248779a6807b63e487c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioVolumeSlider: {fileID: 2060087583}
+  gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
 --- !u!4 &1010455429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6378300057643202173, guid: 3166c8e5200397d408bfe4db4620ed76,
@@ -4036,7 +4049,6 @@ MonoBehaviour:
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
   threshold: 0.125
   movementPerformed: 0
-  lastHoverIndex: -1
 --- !u!114 &1803322589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4375,8 +4387,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 992457415}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+      - m_Target: {fileID: 992457420}
+        m_TargetAssemblyTypeName: Game.GameMenu, Scripts
         m_MethodName: OnAudioVolumeChange
         m_Mode: 1
         m_Arguments:

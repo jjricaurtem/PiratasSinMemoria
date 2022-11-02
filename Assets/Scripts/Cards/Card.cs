@@ -26,9 +26,10 @@ namespace Cards
         private bool _interactionEnable;
         private bool _isCardUp;
         private bool _isSelected;
-        private bool _matched;
         private SpriteRenderer[] _spriteRenderers;
         private Table _table;
+
+        public bool Matched { get; private set; }
 
         private void OnEnable()
         {
@@ -51,7 +52,7 @@ namespace Cards
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_matched || _isCardUp || !_interactionEnable) return;
+            if (Matched || _isCardUp || !_interactionEnable) return;
             _audioSource.clip = cardClickedAudioClips[Random.Range(0, cardClickedAudioClips.Length)];
             _audioSource.Play();
             tableEventChannel.SetCardsInteractionActive(false);
@@ -88,15 +89,15 @@ namespace Cards
 
         public void TurnCardDown()
         {
-            if (_matched || !_isCardUp) return;
+            if (Matched || !_isCardUp) return;
             _animator.SetTrigger(TurnCardSideDown);
             _isCardUp = false;
         }
 
         public void MarkCardAsMatched()
         {
-            if (_matched) return;
-            _matched = true;
+            if (Matched) return;
+            Matched = true;
             _animator.SetTrigger(RemoveCard);
         }
 
