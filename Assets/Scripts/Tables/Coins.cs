@@ -1,7 +1,7 @@
 using Commons.Events;
 using UnityEngine;
 
-namespace Table
+namespace Tables
 {
     public class Coins : MonoBehaviour
     {

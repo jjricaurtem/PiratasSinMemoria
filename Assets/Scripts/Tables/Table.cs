@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Card;
+using Cards;
 using Commons.Events;
 using UnityEngine;
 
-namespace Table
+namespace Tables
 {
     public class Table : MonoBehaviour
     {
@@ -17,18 +17,19 @@ namespace Table
         [SerializeField] private AudioClip[] errorAudioClips;
         [SerializeField] private AudioClip[] matchAudioClips;
         private AudioSource _audioSource;
-        private Card.Card[] _cards;
         private int _cardsMatched;
         private int _cardsReady;
         private Coins _coins;
         private int _currentCardUpIndex = -1;
         private bool _isTableInitialized;
 
+        public Card[] Cards { get; private set; }
+
         // Use this for initialization
         private void Start()
         {
             _cardsMatched = 0;
-            _cards = GetComponentsInChildren<Card.Card>();
+            Cards = GetComponentsInChildren<Cards.Card>();
             _audioSource = GetComponent<AudioSource>();
             _coins = GetComponentInChildren<Coins>();
             ResetBoard();
@@ -36,7 +37,7 @@ namespace Table
 
         public void SelectCard(int index)
         {
-            _cards[index].OnPointerClick(null);
+            Cards[index].OnPointerClick(null);
         }
 
         public void OnCardTurnedUp(int cardIndex)
@@ -48,8 +49,8 @@ namespace Table
             }
             else
             {
-                var currentCardUp = _cards[_currentCardUpIndex];
-                var newCardUp = _cards[cardIndex];
+                var currentCardUp = Cards[_currentCardUpIndex];
+                var newCardUp = Cards[cardIndex];
                 tableEventChannel.SetCardsInteractionActive(false);
                 if (newCardUp.IsSameCardSo(currentCardUp))
                 {
@@ -84,7 +85,7 @@ namespace Table
 
         private void ResetBoard()
         {
-            foreach (var card in _cards) card.SetVisible(false);
+            foreach (var card in Cards) card.SetVisible(false);
             _cardsReady = 0;
             _isTableInitialized = false;
             RandomizeCards();
@@ -107,12 +108,12 @@ namespace Table
 
             var shuffledCards = finalCards.OrderBy(_ => Random.value).ToList();
 
-            for (var i = 0; i < _cards.Length; i++) _cards[i].InitialData(i, shuffledCards[i], this);
+            for (var i = 0; i < Cards.Length; i++) Cards[i].InitialData(i, shuffledCards[i], this);
         }
 
         private IEnumerator DealCards()
         {
-            foreach (var card in _cards)
+            foreach (var card in Cards)
             {
                 card.Initialize();
                 yield return new WaitForSeconds(cardDealSpeedInSeconds);
