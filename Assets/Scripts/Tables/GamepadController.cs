@@ -1,5 +1,4 @@
-﻿using System;
-using Commons.Events;
+﻿using Commons.Events;
 using Game;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -89,22 +88,19 @@ namespace Tables
             {
                 case true when !movementPerformed:
                 {
-                    var columnDirection = 0;
-                    var rowDirection = 0;
-                    // Only move in one direction and not diagonals
-                    if (Math.Abs(axis.x) > Math.Abs(axis.y))
-                    {
-                        if (axis.x > threshold && axis.x > 0) columnDirection++;
-                        else if (axis.x < threshold * -1 && axis.x < 0) columnDirection--;
-                    }
-                    else
-                    {
-                        if (axis.y > threshold && axis.y > 0) rowDirection--;
-                        else if (axis.y < threshold * -1 && axis.y < 0) rowDirection++;
-                    }
 
-                    if (columnDirection == 0 && rowDirection == 0) return;
-                    _cardHoverIndex = FindNextValidCardPosition(_cardHoverIndex, columnDirection, rowDirection);
+                    var cardHoverColumnIndex = _cardHoverIndex % 4;
+                    var cardHoverRowIndex = _cardHoverIndex / 4;
+
+                    if (axis.x > threshold && axis.x > 0 && cardHoverColumnIndex < 3) cardHoverColumnIndex++;
+                    else if (axis.x < threshold * -1 && axis.x < 0 && cardHoverColumnIndex > 0) cardHoverColumnIndex--;
+                    if (axis.y > threshold && axis.y > 0 && cardHoverRowIndex > 0) cardHoverRowIndex--;
+                    else if (axis.y < threshold * -1 && axis.y < 0 && cardHoverRowIndex < 1) cardHoverRowIndex++;
+
+                    var cardHoverIndex = cardHoverRowIndex * 4 + cardHoverColumnIndex;
+                    if (_cardHoverIndex == cardHoverIndex) return;
+                    
+                    _cardHoverIndex = cardHoverIndex;
                     tableEventChannel.HoverCard(_cardHoverIndex);
                     movementPerformed = true;
                     break;
@@ -112,29 +108,6 @@ namespace Tables
                 case false:
                     movementPerformed = false;
                     break;
-            }
-        }
-
-        private int FindNextValidCardPosition(int currentIndex, int nextX, int nextY)
-        {
-            while (true)
-            {
-                var cardHoverColumnIndex = currentIndex % 4;
-                var cardHoverRowIndex = currentIndex / 4;
-
-                // If its outside of the limits
-                cardHoverColumnIndex += nextX;
-                if (cardHoverColumnIndex is < 0 or > 3) return _cardHoverIndex;
-
-                // If its outside of the limits
-                cardHoverRowIndex += nextY;
-                if (cardHoverRowIndex is < 0 or > 1) return _cardHoverIndex;
-
-                var newIndex = cardHoverRowIndex * 4 + cardHoverColumnIndex;
-                var card = _table.Cards[newIndex];
-                if (!card.Matched) return newIndex;
-
-                currentIndex = newIndex;
             }
         }
 

@@ -16,7 +16,6 @@ namespace Cards
         private static readonly int RemoveCard = Animator.StringToHash("RemoveCard");
         public TableEventChannel tableEventChannel;
         [SerializeField] private AudioClip[] cardClickedAudioClips;
-        [SerializeField] private GameObject cardSelectionObject;
 
         private Animator _animator;
         private AudioSource _audioSource;
@@ -41,13 +40,11 @@ namespace Cards
             SetVisible(false);
 
             tableEventChannel.OnCardsInteractionActivation += OnCardsInteractionActivation;
-            tableEventChannel.OnCardHover += OnCardHover;
         }
 
         private void OnDestroy()
         {
             tableEventChannel.OnCardsInteractionActivation -= OnCardsInteractionActivation;
-            tableEventChannel.OnCardHover -= OnCardHover;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -59,8 +56,6 @@ namespace Cards
             _animator.SetTrigger(TurnCardSideUp);
             _isCardUp = true;
         }
-
-        private void OnCardHover(int hoverCardId) => cardSelectionObject.SetActive(hoverCardId == _cardIndex);
 
         public void SetVisible(bool visible)
         {
@@ -112,7 +107,7 @@ namespace Cards
             else
             {
                 _table.OnCardReady();
-                if (animationNameHash == RemoveCard) enabled = false;
+                // if (animationNameHash == RemoveCard) enabled = false;
                 if (animationNameHash == RemoveCard || animationNameHash == TurnCardSideDown)
                     tableEventChannel.SetCardsInteractionActive(true);
             }
