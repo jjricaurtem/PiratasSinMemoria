@@ -1724,7 +1724,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "8440cc43cee84e2ab5f797a6561a11f7",
     "m_Id": 0,
-    "m_DisplayName": "_GreyScale",
+    "m_DisplayName": "_GrayScale",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1765,10 +1765,10 @@
     "m_Guid": {
         "m_GuidSerialized": "c3068ee3-aa67-48ed-869e-73694252f6f5"
     },
-    "m_Name": "_GreyScale",
+    "m_Name": "_GrayScale",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "_GreyScale",
-    "m_DefaultReferenceName": "_GreyScale",
+    "m_RefNameGeneratedByDisplayName": "_GrayScale",
+    "m_DefaultReferenceName": "_GrayScale",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
