@@ -1,27 +1,30 @@
 ﻿using System.Collections;
-using Commons.Events;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game
 {
-    public class Menu : MonoBehaviour
+    public class PapyrusToggle : MonoBehaviour
     {
         [SerializeField] private float menuAnimationTime;
-        [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private Button closeMenuButton;
-        [SerializeField] private Slider audioVolumeSlider;
         [SerializeField] private AudioClip openMenuAudioClip;
         [SerializeField] private AudioClip closeMenuAudioClip;
         [SerializeField] private Canvas canvas;
         [SerializeField] private float closeYPosition = -300f;
-
+        
+        public UnityAction<bool> OnStartTogglePapyrus;
         private const float OpenYPosition = 0f;
         private bool _isAnimating;
         private bool _isOpen;
         private AudioSource _audioSource;
 
+        public void ToggleMenu()
+        {
+            if (_isOpen) CloseMenuButton_clicked();
+            else OnMenuClickHandler();
+        }
         public void CloseMenuButton_clicked()
         {
             if (_isAnimating) return;
@@ -45,7 +48,7 @@ namespace Game
             float time = 0;
             var startPosition = transform.position.y;
             var targetPosition = _isOpen ? GetScreenScaledCloseMenuYPosition() : OpenYPosition;
-            gameEventChannel.GamePause(!_isOpen);
+            OnStartTogglePapyrus?.Invoke(_isOpen);
             while (_isAnimating)
             {
                 time += Time.deltaTime / menuAnimationTime;
@@ -60,7 +63,6 @@ namespace Game
             closeMenuButton.gameObject.SetActive(_isOpen);
         }
 
-
         private float GetScreenScaledCloseMenuYPosition()
         {
             return closeYPosition * canvas.transform.localScale.y;
@@ -73,17 +75,6 @@ namespace Game
             // _closeYPosition = transform.position.y;
 
             _audioSource = GetComponent<AudioSource>();
-            audioVolumeSlider.value = AudioListener.volume;
-        }
-
-        public void OnAudioVolumeChange()
-        {
-            AudioListener.volume = audioVolumeSlider.value;
-        }
-
-        public void OnRestart()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
     }
 }

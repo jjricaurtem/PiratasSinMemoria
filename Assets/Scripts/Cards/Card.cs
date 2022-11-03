@@ -1,11 +1,12 @@
 using System;
 using Commons.Events;
 using JetBrains.Annotations;
+using Tables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-namespace Card
+namespace Cards
 {
     public class Card : MonoBehaviour, IPointerClickHandler
     {
@@ -25,9 +26,10 @@ namespace Card
         private bool _interactionEnable;
         private bool _isCardUp;
         private bool _isSelected;
-        private bool _matched;
         private SpriteRenderer[] _spriteRenderers;
-        private Table.Table _table;
+        private Table _table;
+
+        public bool Matched { get; private set; }
 
         private void OnEnable()
         {
@@ -50,7 +52,7 @@ namespace Card
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_matched || _isCardUp || !_interactionEnable) return;
+            if (Matched || _isCardUp || !_interactionEnable) return;
             _audioSource.clip = cardClickedAudioClips[Random.Range(0, cardClickedAudioClips.Length)];
             _audioSource.Play();
             tableEventChannel.SetCardsInteractionActive(false);
@@ -65,7 +67,7 @@ namespace Card
             foreach (var spriteRender in _spriteRenderers) spriteRender.enabled = visible;
         }
 
-        public void InitialData(int index, CardSo cardSo, Table.Table table)
+        public void InitialData(int index, CardSo cardSo, Table table)
         {
             _cardSo = cardSo;
             _frontSpriteRenderer.sprite = _cardSo.sprite;
@@ -87,15 +89,15 @@ namespace Card
 
         public void TurnCardDown()
         {
-            if (_matched || !_isCardUp) return;
+            if (Matched || !_isCardUp) return;
             _animator.SetTrigger(TurnCardSideDown);
             _isCardUp = false;
         }
 
         public void MarkCardAsMatched()
         {
-            if (!_matched) return;
-            _matched = true;
+            if (Matched) return;
+            Matched = true;
             _animator.SetTrigger(RemoveCard);
         }
 
