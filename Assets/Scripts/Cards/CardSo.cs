@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Commons.Data
+namespace Cards
 {
     [CreateAssetMenu(fileName = "NAME_CardSo", menuName = "MemoryLessPirates/Card/CardSo")]
     public class CardSo : ScriptableObject
