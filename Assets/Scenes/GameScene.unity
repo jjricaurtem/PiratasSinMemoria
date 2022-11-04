@@ -1969,6 +1969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioVolumeSlider: {fileID: 2060087583}
   gameEventChannel: {fileID: 11400000, guid: 1b8863f44a8286b4f81891fc4af39f67, type: 2}
+  sliderInputSpeed: 0.1
 --- !u!1 &1016353675
 GameObject:
   m_ObjectHideFlags: 0

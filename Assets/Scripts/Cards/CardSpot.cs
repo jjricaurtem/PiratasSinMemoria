@@ -1,5 +1,6 @@
 ﻿using Commons.Events;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Cards
 {
@@ -16,7 +17,7 @@ namespace Cards
 
         private void OnEnable() =>  tableEventChannel.OnCardHover += OnCardHover;
 
-        private void OnDisable() =>  tableEventChannel.OnCardHover += OnCardHover;
+        private void OnDisable() =>  tableEventChannel.OnCardHover -= OnCardHover;
         
         private void OnCardHover(int hoverCardId) => spriteRenderer.enabled = (hoverCardId == index);
     }
