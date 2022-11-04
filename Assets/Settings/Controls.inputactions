@@ -24,9 +24,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToogleMenu",
+                    "name": "ToggleMenu",
                     "type": "Button",
                     "id": "a873bb80-f076-431b-a3aa-a75b879c3302",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CancelAction",
+                    "type": "Button",
+                    "id": "2f7cd397-5271-4d8b-8b32-8b60b6bfa426",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ConfirmAction",
+                    "type": "Button",
+                    "id": "a46a15bd-d06f-4419-be25-481b4d8b6340",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -84,8 +102,8 @@
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "ToogleMenu",
+                    "groups": "Gamepad",
+                    "action": "ToggleMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -96,7 +114,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToogleMenu",
+                    "action": "ToggleMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42a5dd25-781b-4822-883e-dfca85d0e08d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CancelAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af1bc19c-11bc-49ef-936e-14011f8bab86",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ConfirmAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

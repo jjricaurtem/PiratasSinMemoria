@@ -17,12 +17,18 @@ namespace Game
         public UnityAction<bool> OnStartTogglePapyrus;
         private const float OpenYPosition = 0f;
         private bool _isAnimating;
-        private bool _isOpen;
         private AudioSource _audioSource;
+
+        public bool IsOpen { get; private set; }
+
+        public void CloseOnlyMenu()
+        {
+            if (IsOpen) CloseMenuButton_clicked();
+        }
 
         public void ToggleMenu()
         {
-            if (_isOpen) CloseMenuButton_clicked();
+            if (IsOpen) CloseMenuButton_clicked();
             else OnMenuClickHandler();
         }
         public void CloseMenuButton_clicked()
@@ -35,7 +41,7 @@ namespace Game
 
         public void OnMenuClickHandler()
         {
-            if (_isAnimating || _isOpen) return;
+            if (_isAnimating || IsOpen) return;
             _audioSource.clip = openMenuAudioClip;
             _audioSource.Play();
             StartCoroutine(SwitchMenuDisplayMode());
@@ -47,8 +53,8 @@ namespace Game
 
             float time = 0;
             var startPosition = transform.position.y;
-            var targetPosition = _isOpen ? GetScreenScaledCloseMenuYPosition() : OpenYPosition;
-            OnStartTogglePapyrus?.Invoke(_isOpen);
+            var targetPosition = IsOpen ? GetScreenScaledCloseMenuYPosition() : OpenYPosition;
+            OnStartTogglePapyrus?.Invoke(IsOpen);
             while (_isAnimating)
             {
                 time += Time.deltaTime / menuAnimationTime;
@@ -59,8 +65,8 @@ namespace Game
                 _isAnimating = !Mathf.Approximately(yMovement, targetPosition);
                 yield return null;
             }
-            _isOpen = !_isOpen;
-            closeMenuButton.gameObject.SetActive(_isOpen);
+            IsOpen = !IsOpen;
+            closeMenuButton.gameObject.SetActive(IsOpen);
         }
 
         private float GetScreenScaledCloseMenuYPosition()
