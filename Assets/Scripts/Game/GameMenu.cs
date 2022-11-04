@@ -30,8 +30,7 @@ namespace Game
                 _controls.Default.ToggleMenu.performed += OnToggleMenu;
                 _controls.Default.CancelAction.performed += OnCancelAction;
                 _controls.Default.Move.performed += ChangeVolume;
-                _controls.Default.ConfirmAction.performed += _ =>
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+                _controls.Default.ConfirmAction.performed += OnConfirmAction;
             }
 
             _controls.Default.Enable();
@@ -43,8 +42,15 @@ namespace Game
             _controls?.Default.Disable();
         }
 
+        private void OnConfirmAction(InputAction.CallbackContext ctx)
+        {
+            if (!_papyrusToggle.IsOpen) return;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        }
+
         private void ChangeVolume(InputAction.CallbackContext ctx)
         {
+            if (!_papyrusToggle.IsOpen) return;
             var inputAxis = ctx.ReadValue<Vector2>();
             audioVolumeSlider.value += inputAxis.x * sliderInputSpeed;
         }
@@ -53,11 +59,13 @@ namespace Game
 
         public void OnAudioVolumeChange()
         {
+            if (!_papyrusToggle.IsOpen) return;
             AudioListener.volume = audioVolumeSlider.value;
         }
 
         public void OnRestart()
         {
+            if (!_papyrusToggle.IsOpen) return;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
 
