@@ -1,5 +1,4 @@
-﻿using System;
-using Commons.Events;
+﻿using Commons.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +11,7 @@ namespace Game
         [SerializeField] private GameEventChannel gameEventChannel;
 
         private PapyrusToggle _papyrusToggle;
+
         public void Start()
         {
             audioVolumeSlider.value = AudioListener.volume;
