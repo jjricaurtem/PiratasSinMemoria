@@ -11,11 +11,15 @@ namespace Audio
 
         private void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
-            if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        private void OnEnable() => audioEventChannel.OnReproduceSound += OnReproduceSound;
+        private void OnEnable()
+        {
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
+            audioEventChannel.OnReproduceSound += OnReproduceSound;
+        }
+
         private void OnDisable() => audioEventChannel.OnReproduceSound -= OnReproduceSound;
 
         private void OnReproduceSound(AudioClipGroup audioClipGroup)

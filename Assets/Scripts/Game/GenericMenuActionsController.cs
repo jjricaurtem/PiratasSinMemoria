@@ -1,13 +1,15 @@
 ﻿using Audio;
+using Commons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game
 {
-    public class MainMenuController : MonoBehaviour
+    public class GenericMenuActionsController : MonoBehaviour
     {
         [SerializeField] private AudioEventChannel musicAudioEventChannel;
         [SerializeField] private AudioEventChannel effectsAudioEventChannel;
+        [SerializeField] private GameInformation gameInformation;
         private void Start()
         {
             musicAudioEventChannel.ReproduceAudio(AudioClipGroupName.Intro);
@@ -22,6 +24,12 @@ namespace Game
         public void LoadScene(string sceneName) {
             effectsAudioEventChannel.ReproduceAudio(AudioClipGroupName.Click);
             SceneManager.LoadScene(sceneName);
+        }
+
+        public void StartGame(int numberOfPlayers)
+        {
+            gameInformation.numberOfPlayers = numberOfPlayers;
+            LoadScene("GameScene");
         }
         
     }

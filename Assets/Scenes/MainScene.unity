@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 214351123}
   - component: {fileID: 214351125}
   m_Layer: 0
-  m_Name: MainMenuController
+  m_Name: MenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,6 +504,7 @@ MonoBehaviour:
     type: 2}
   effectsAudioEventChannel: {fileID: 11400000, guid: a745e2aaab3e7424c9fe1090820b42d2,
     type: 2}
+  gameInformation: {fileID: 11400000, guid: 060045370485a684da726c0669c5a95d, type: 2}
 --- !u!1 &282378633
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +730,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: GameScene
+          m_StringArgument: MultiplayerScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &347841697
@@ -2889,13 +2890,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 214351125}
-        m_TargetAssemblyTypeName: Game.MainMenuController, Scripts
-        m_MethodName: LoadScene
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Game.GenericMenuActionsController, Scripts
+        m_MethodName: StartGame
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: GameScene
           m_BoolArgument: 0
