@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cards;
+using Commons;
 using Commons.Events;
 using UnityEngine;
 
@@ -16,22 +17,28 @@ namespace Tables
         [SerializeField] private float cardDealSpeedInSeconds;
         [SerializeField] private AudioClip[] errorAudioClips;
         [SerializeField] private AudioClip[] matchAudioClips;
+        [SerializeField] private GameInformation gameInformation;
+        [SerializeField] private GameObject gun;
         private AudioSource _audioSource;
         private int _cardsMatched;
         private int _cardsReady;
-        private Coins _coins;
+        private Coins[] _coins;
         private int _currentCardUpIndex = -1;
         private bool _isTableInitialized;
+        private bool _isMultiplayer;
+        private int _currentTurn = 1;
 
-        public Card[] Cards { get; private set; }
+        private Card[] Cards { get; set; }
 
-        // Use this for initialization
         private void Start()
         {
             _cardsMatched = 0;
-            Cards = GetComponentsInChildren<Cards.Card>();
+            Cards = GetComponentsInChildren<Card>();
             _audioSource = GetComponent<AudioSource>();
-            _coins = GetComponentInChildren<Coins>();
+            _coins = GetComponentsInChildren<Coins>();
+            _isMultiplayer = gameInformation.numberOfPlayers > 1;
+            gun.SetActive(!_isMultiplayer);
+            _coins[1].gameObject.SetActive(_isMultiplayer); 
             ResetBoard();
         }
 
@@ -64,12 +71,13 @@ namespace Tables
                 {
                     currentCardUp.TurnCardDown();
                     newCardUp.TurnCardDown();
-                    _coins.RemoveCoin();
+                    _coins[_currentTurn-1].RemoveCoin();
                     _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
                 }
 
                 _audioSource.Play();
                 _currentCardUpIndex = -1;
+                if (_isMultiplayer) _currentTurn = _currentTurn == 1 ? 2 : 1;
             }
         }
 
