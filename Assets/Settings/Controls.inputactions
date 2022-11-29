@@ -76,17 +76,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a183a230-84ff-44fe-a45b-2b1320472d80",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "DefaultAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6811859c-512c-443b-b155-12dd59f17cac",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
