@@ -24,9 +24,9 @@ namespace Tables
         private int _cardsReady;
         private Coins[] _coins;
         private int _currentCardUpIndex = -1;
-        private bool _isTableInitialized;
-        private bool _isMultiplayer;
         private int _currentTurn = 1;
+        private bool _isMultiplayer;
+        private bool _isTableInitialized;
 
         private Card[] Cards { get; set; }
 
@@ -38,7 +38,7 @@ namespace Tables
             _coins = GetComponentsInChildren<Coins>();
             _isMultiplayer = gameInformation.numberOfPlayers > 1;
             gun.SetActive(!_isMultiplayer);
-            _coins[1].gameObject.SetActive(_isMultiplayer); 
+            _coins[1].gameObject.SetActive(_isMultiplayer);
             ResetBoard();
         }
 
@@ -65,13 +65,17 @@ namespace Tables
                     currentCardUp.MarkCardAsMatched();
                     newCardUp.MarkCardAsMatched();
                     _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
-                    if (_cardsMatched >= cardsAmount) gameEventChannel.GameEnd(true);
+                    if (_cardsMatched >= cardsAmount)
+                        gameEventChannel.GameEnd(true, _isMultiplayer ? "Player " + _currentTurn : null);
                 }
                 else
                 {
                     currentCardUp.TurnCardDown();
                     newCardUp.TurnCardDown();
-                    _coins[_currentTurn-1].RemoveCoin();
+                    var hasCoinsLeft = _coins[_currentTurn - 1].RemoveCoin();
+                    if (!hasCoinsLeft)
+                        gameEventChannel.GameEnd(_isMultiplayer,
+                            _isMultiplayer ? "Player " + (_currentTurn == 1 ? 2 : 1) : null);
                     _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
                 }
 

@@ -7,10 +7,11 @@ namespace Commons.Events
     public class GameEventChannel : ScriptableObject
     {
         public UnityAction<bool> OnPauseEvent;
-        public UnityAction<bool> OnGameEnd;
+        public UnityAction<bool, string> OnGameEnd;
 
         public void GamePause(bool isPause) => OnPauseEvent?.Invoke(isPause);
 
-        public void GameEnd(bool isAWin) => OnGameEnd?.Invoke(isAWin);
+        public void GameEnd(bool isAWin, string winnerName) => OnGameEnd?.Invoke(isAWin, winnerName);
+
     }
 }

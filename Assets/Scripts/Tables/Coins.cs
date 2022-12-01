@@ -16,12 +16,15 @@ namespace Tables
             _currentCoinIndex = 0;
         }
 
-        public void RemoveCoin()
+        /**
+         * Returns true if still has coins
+         */
+        public bool RemoveCoin()
         {
-            if (_currentCoinIndex >= coins.Length) return;
+            if (_currentCoinIndex >= coins.Length) return false;
             coins[_currentCoinIndex].GetComponent<Animator>().SetTrigger(RemoveCoinHash);
             _currentCoinIndex++;
-            if (_currentCoinIndex >= coins.Length) gameEventChannel.GameEnd(false);
+            return _currentCoinIndex < coins.Length;
         }
     }
 }

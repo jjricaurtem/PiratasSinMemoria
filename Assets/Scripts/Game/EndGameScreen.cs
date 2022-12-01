@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Commons.Events;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Game
     {
         private static readonly int GrayScale = Shader.PropertyToID("_GrayScale");
         [SerializeField] private Image imageElement;
+        [SerializeField] private TMP_Text playerNameText;
         [SerializeField] private Sprite victorySprite;
         [SerializeField] private Sprite defeatSprite;
         [SerializeField] private AudioClip[] winAudioClips;
@@ -26,6 +28,7 @@ namespace Game
         }
 
         private void OnEnable() => gameEventChannel.OnGameEnd += OnGameEnd;
+
         private void OnDisable()
         {
             gameEventChannel.OnGameEnd -= OnGameEnd;
@@ -33,10 +36,11 @@ namespace Game
         }
 
 
-        private void OnGameEnd(bool isAWin)
+        private void OnGameEnd(bool isAWin, string playerName)
         {
             imageElement.sprite = isAWin ? victorySprite : defeatSprite;
             foreach (var gameObjectToShow in objectsToShow) gameObjectToShow.SetActive(true);
+            playerNameText.text = playerName != null ? $"¡{playerName} Wins!" : "";
 
             if (!isAWin) StartCoroutine(GrayScaleFade());
 
