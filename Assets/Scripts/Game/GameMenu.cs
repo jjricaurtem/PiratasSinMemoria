@@ -66,8 +66,10 @@ namespace Game
         public void OnRestart()
         {
             if (!_papyrusToggle.IsOpen) return;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            Restart();
         }
+
+        public void Restart()=> SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
 
         private void OnCancelAction(InputAction.CallbackContext ctx)
         {
