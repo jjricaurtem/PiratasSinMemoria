@@ -6,5 +6,8 @@ namespace Commons
     public class GameInformation : ScriptableObject
     {
         public int numberOfPlayers = 1;
+        public int[] playerCoins = {3, 3};
+
+        public bool IsMultiplayer() => numberOfPlayers > 1;
     }
 }

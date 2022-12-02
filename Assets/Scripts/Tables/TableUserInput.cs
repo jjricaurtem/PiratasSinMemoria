@@ -82,7 +82,7 @@ namespace Tables
             }
         }
 
-        private void OnGameEnd(bool isEnable, string playerName)
+        private void OnGameEnd()
         {
             _isInteractable = false;
             _isGameEnd = true;
