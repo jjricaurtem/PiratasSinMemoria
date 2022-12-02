@@ -22,3 +22,17 @@ MonoBehaviour:
     isLoopTime: 0
     audioClips:
     - {fileID: 8300000, guid: 01953fd75875e9f40828213a68668a8f, type: 3}
+  - audioClipGroupName: 2
+    isLoopTime: 0
+    audioClips:
+    - {fileID: 8300000, guid: b1e26a1c1684b694a888d46471e3887a, type: 3}
+    - {fileID: 8300000, guid: 87203dfb51d2a38499e87dfb20484e40, type: 3}
+  - audioClipGroupName: 3
+    isLoopTime: 0
+    audioClips:
+    - {fileID: 8300000, guid: 3c99430ad20da8c42997daa39ab6e10f, type: 3}
+    - {fileID: 8300000, guid: 17ac65984af1c7a40a3ce8be439356e5, type: 3}
+  - audioClipGroupName: 4
+    isLoopTime: 1
+    audioClips:
+    - {fileID: 8300000, guid: 975b75868a7d88f4686ead22f698d57b, type: 3}

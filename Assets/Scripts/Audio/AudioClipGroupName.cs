@@ -3,6 +3,9 @@
     public enum AudioClipGroupName
     {
         Click,
-        Intro
+        Intro,
+        EndGameWin,
+        EndGameLost,
+        MainGameLoop
     }
 }

@@ -211,12 +211,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioService
       objectReference: {fileID: 0}
-    - target: {fileID: 437078955600065142, guid: 4ba384f2081f3844cbbf6c6f2a104f07,
-        type: 3}
-      propertyPath: audioEventChannel
-      value: 
-      objectReference: {fileID: 11400000, guid: 968ab605e6df8744686ae6f9f5f02c31,
-        type: 2}
     - target: {fileID: 1203191205845401590, guid: 4ba384f2081f3844cbbf6c6f2a104f07,
         type: 3}
       propertyPath: m_RootOrder
@@ -274,25 +268,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba384f2081f3844cbbf6c6f2a104f07, type: 3}
---- !u!1 &214641786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1327844186431185518, guid: 4ba384f2081f3844cbbf6c6f2a104f07,
-    type: 3}
-  m_PrefabInstance: {fileID: 214641785}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &214641787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214641786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e751d85202864b4c8d914de36e81363e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioEventChannel: {fileID: 11400000, guid: a745e2aaab3e7424c9fe1090820b42d2, type: 2}
 --- !u!1 &227950779
 GameObject:
   m_ObjectHideFlags: 0
