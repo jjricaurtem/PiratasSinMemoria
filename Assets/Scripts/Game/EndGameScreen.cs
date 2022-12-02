@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Audio;
 using Commons.Events;
 using TMPro;
 using UnityEngine;
@@ -13,17 +14,14 @@ namespace Game
         [SerializeField] private TMP_Text playerNameText;
         [SerializeField] private Sprite victorySprite;
         [SerializeField] private Sprite defeatSprite;
-        [SerializeField] private AudioClip[] winAudioClips;
-        [SerializeField] private AudioClip[] loseAudioClips;
         [SerializeField] private GameObject[] objectsToShow;
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private Material grayScaleMaterial;
         [SerializeField] private float grayScaleTransitionSpeed;
-        private AudioSource _audioSource;
+        [SerializeField] private AudioEventChannel audioEventChannel;
 
         private void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
             grayScaleMaterial.SetFloat(GrayScale, 0);
         }
 
@@ -43,10 +41,7 @@ namespace Game
             playerNameText.text = playerName != null ? $"¡{playerName} Wins!" : "";
 
             if (!isAWin) StartCoroutine(GrayScaleFade());
-
-            var audioClips = isAWin ? winAudioClips : loseAudioClips;
-            _audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
-            _audioSource.Play();
+            audioEventChannel.ReproduceAudio(isAWin ? AudioClipGroupName.EndGameWin : AudioClipGroupName.EndGameLost);
         }
 
         private IEnumerator GrayScaleFade()

@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e751d85202864b4c8d914de36e81363e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioEventChannel: {fileID: 0}
+  audioEventChannel: {fileID: 11400000, guid: 968ab605e6df8744686ae6f9f5f02c31, type: 2}
 --- !u!1 &1327844186431185518
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5844821327917058006}
   - component: {fileID: 3139318617371591080}
+  - component: {fileID: 214641787}
   m_Layer: 0
   m_Name: Effects
   m_TagString: Untagged
@@ -303,3 +304,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &214641787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327844186431185518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e751d85202864b4c8d914de36e81363e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioEventChannel: {fileID: 11400000, guid: a745e2aaab3e7424c9fe1090820b42d2, type: 2}
