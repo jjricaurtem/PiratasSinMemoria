@@ -8,9 +8,11 @@ namespace Commons.Events
     {
         public UnityAction<int> OnCardHover;
         public UnityAction<bool> OnCardsInteractionActivation;
+        public UnityAction<int> OnRemoveCoin;
 
         public void SetCardsInteractionActive(bool active) => OnCardsInteractionActivation?.Invoke(active);
 
         public void HoverCard(int cardId) => OnCardHover?.Invoke(cardId);
+        public void RemoveCoin(int playerNumber) => OnRemoveCoin?.Invoke(playerNumber);
     }
 }

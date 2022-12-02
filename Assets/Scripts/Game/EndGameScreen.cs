@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Audio;
+using Commons;
 using Commons.Events;
 using TMPro;
 using UnityEngine;
@@ -14,33 +15,56 @@ namespace Game
         [SerializeField] private TMP_Text playerNameText;
         [SerializeField] private Sprite victorySprite;
         [SerializeField] private Sprite defeatSprite;
+        [SerializeField] private Sprite drawSprite;
         [SerializeField] private GameObject[] objectsToShow;
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private Material grayScaleMaterial;
         [SerializeField] private float grayScaleTransitionSpeed;
         [SerializeField] private AudioEventChannel audioEventChannel;
+        [SerializeField] private GameInformation gameInformation;
+        private int _currentPlayerNumber;
 
         private void Start()
         {
             grayScaleMaterial.SetFloat(GrayScale, 0);
         }
 
-        private void OnEnable() => gameEventChannel.OnGameEnd += OnGameEnd;
+        private void OnEnable()
+        {
+            gameEventChannel.OnGameEnd += OnGameEnd;
+            gameEventChannel.OnTurnChange += OnTurnChange;
+        }
+
+        private void OnTurnChange(int playerNumber)
+        {
+            _currentPlayerNumber = playerNumber;
+        }
 
         private void OnDisable()
         {
             gameEventChannel.OnGameEnd -= OnGameEnd;
+            gameEventChannel.OnTurnChange -= OnTurnChange;
             grayScaleMaterial.SetFloat(GrayScale, 0);
         }
 
 
-        private void OnGameEnd(bool isAWin, string playerName)
+        private void OnGameEnd()
         {
-            imageElement.sprite = isAWin ? victorySprite : defeatSprite;
+            bool isAWin;
+            if (gameInformation.IsMultiplayer())
+            {
+                isAWin = gameInformation.playerCoins[0] != gameInformation.playerCoins[1];
+                imageElement.sprite = isAWin ? victorySprite : drawSprite;
+                playerNameText.text = _currentPlayerNumber > 0 ? $"¡Player {_currentPlayerNumber} Wins!" : "";
+            }
+            else
+            {
+                isAWin = gameInformation.playerCoins[0] > 0;
+                imageElement.sprite = isAWin ? victorySprite : defeatSprite;
+            }
+                         
             foreach (var gameObjectToShow in objectsToShow) gameObjectToShow.SetActive(true);
-            playerNameText.text = playerName != null ? $"¡{playerName} Wins!" : "";
-
-            if (!isAWin) StartCoroutine(GrayScaleFade());
+            StartCoroutine(GrayScaleFade());
             audioEventChannel.ReproduceAudio(isAWin ? AudioClipGroupName.EndGameWin : AudioClipGroupName.EndGameLost);
         }
 

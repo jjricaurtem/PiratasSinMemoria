@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42f90e25eb8468186cb8156097a55ee, type: 3}
   m_Name: GameInformation
   m_EditorClassIdentifier: 
-  numberOfPlayers: 1
+  numberOfPlayers: 2
+  playerCoins: f9ffffff03000000
