@@ -61,6 +61,7 @@ namespace Game
             {
                 isAWin = gameInformation.playerCoins[0] > 0;
                 imageElement.sprite = isAWin ? victorySprite : defeatSprite;
+                playerNameText.text = "";
             }
                          
             foreach (var gameObjectToShow in objectsToShow) gameObjectToShow.SetActive(true);

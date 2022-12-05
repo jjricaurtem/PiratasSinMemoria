@@ -16,9 +16,10 @@ namespace Tables
 
         private void Start()
         {
-            gameObject.SetActive(playerNumber <= gameInformation.numberOfPlayers);
+            var active = playerNumber <= gameInformation.numberOfPlayers;
+            gameObject.SetActive(active);
             _currentCoinIndex = 0;
-            gameInformation.playerCoins[playerNumber] = 3;
+            gameInformation.playerCoins[playerNumber-1] = active ?  3 : 0;
         }
 
         private void OnEnable()

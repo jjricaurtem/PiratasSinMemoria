@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Cards;
 using Commons;
 using Commons.Events;
@@ -15,14 +16,11 @@ namespace Tables
         [SerializeField] private GameEventChannel gameEventChannel;
         [SerializeField] private int cardsAmount;
         [SerializeField] private float cardDealSpeedInSeconds;
-        [SerializeField] private AudioClip[] errorAudioClips;
-        [SerializeField] private AudioClip[] matchAudioClips;
         [SerializeField] private GameInformation gameInformation;
         [SerializeField] private GameObject gun;
-        private AudioSource _audioSource;
+        [SerializeField] private AudioEventChannel audioEventChannelFx;
         private int _cardsMatched;
         private int _cardsReady;
-        private Coins[] _coins;
         private int _currentCardUpIndex = -1;
         private int _currentTurn = 1;
         private bool _isTableInitialized;
@@ -33,8 +31,6 @@ namespace Tables
         {
             _cardsMatched = 0;
             Cards = GetComponentsInChildren<Card>();
-            _audioSource = GetComponent<AudioSource>();
-            _coins = GetComponentsInChildren<Coins>();
             gun.SetActive(!gameInformation.IsMultiplayer());
             ResetBoard();
         }
@@ -61,7 +57,7 @@ namespace Tables
                     _cardsMatched += 2;
                     currentCardUp.MarkCardAsMatched();
                     newCardUp.MarkCardAsMatched();
-                    _audioSource.clip = matchAudioClips[Random.Range(0, matchAudioClips.Length)];
+                    audioEventChannelFx.ReproduceAudio(AudioClipGroupName.CardMatch);
                     if (_cardsMatched >= cardsAmount)
                         gameEventChannel.GameEnd();
                 }
@@ -69,12 +65,11 @@ namespace Tables
                 {
                     currentCardUp.TurnCardDown();
                     newCardUp.TurnCardDown();
-                    
+
                     tableEventChannel.RemoveCoin(_currentTurn);
-                    _audioSource.clip = errorAudioClips[Random.Range(0, errorAudioClips.Length)];
+                    audioEventChannelFx.ReproduceAudio(AudioClipGroupName.CardError);
                 }
 
-                _audioSource.Play();
                 _currentCardUpIndex = -1;
 
                 ChangeTurn();

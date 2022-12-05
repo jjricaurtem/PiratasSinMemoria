@@ -209,6 +209,8 @@ MonoBehaviour:
   cardClickedAudioClips:
   - {fileID: 8300000, guid: 56837fa78e5c50c4fb23dff93cbc10c8, type: 3}
   - {fileID: 8300000, guid: 3c52b583b14b1024490054687e19ba5e, type: 3}
+  audioEventChannelFx: {fileID: 11400000, guid: a745e2aaab3e7424c9fe1090820b42d2,
+    type: 2}
 --- !u!61 &6493343201951837072
 BoxCollider2D:
   m_ObjectHideFlags: 0

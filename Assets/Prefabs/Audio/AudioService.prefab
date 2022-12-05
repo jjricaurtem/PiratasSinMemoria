@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5392961858261248474}
   - component: {fileID: 8666627537637265301}
-  - component: {fileID: 437078955600065142}
+  - component: {fileID: 4231112838133461109}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -76,7 +76,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 01953fd75875e9f40828213a68668a8f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 975b75868a7d88f4686ead22f698d57b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -162,7 +162,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &437078955600065142
+--- !u!114 &4231112838133461109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 313709430745496610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e751d85202864b4c8d914de36e81363e, type: 3}
+  m_Script: {fileID: 11500000, guid: 160f0b37a25c42dd9672add95e680afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioEventChannel: {fileID: 11400000, guid: 968ab605e6df8744686ae6f9f5f02c31, type: 2}
@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5844821327917058006}
   - component: {fileID: 3139318617371591080}
-  - component: {fileID: 214641787}
+  - component: {fileID: 7259960334115482240}
   m_Layer: 0
   m_Name: Effects
   m_TagString: Untagged
@@ -304,7 +304,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &214641787
+--- !u!114 &7259960334115482240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,7 +313,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327844186431185518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e751d85202864b4c8d914de36e81363e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91195867a2284002951d1f5a2f730046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioEmitterPrefab: {fileID: 2275757280946220237, guid: b31a1a3e135ac7742bc8904c3bf89268,
+    type: 3}
   audioEventChannel: {fileID: 11400000, guid: a745e2aaab3e7424c9fe1090820b42d2, type: 2}
