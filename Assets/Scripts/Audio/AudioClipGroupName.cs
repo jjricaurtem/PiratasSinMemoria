@@ -6,6 +6,11 @@
         Intro,
         EndGameWin,
         EndGameLost,
-        MainGameLoop
+        MainGameLoop,
+        PapyrusOpen,
+        PapyrusClose,
+        CardError,
+        CardMatch,
+        CardDeal,
     }
 }

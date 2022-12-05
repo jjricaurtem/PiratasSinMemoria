@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Audio
@@ -6,33 +6,35 @@ namespace Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioEmitter : MonoBehaviour
     {
-        [SerializeField] private AudioEventChannel audioEventChannel;
         private AudioSource _audioSource;
 
-        private void Start()
-        {
-        }
+        public bool IsPlaying { get; private set; } = false;
 
-        private void OnEnable()
+        private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+            _audioSource.loop = false;
+
             if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
-            audioEventChannel.OnReproduceSound += OnReproduceSound;
         }
 
-        private void OnDisable() => audioEventChannel.OnReproduceSound -= OnReproduceSound;
 
-        private void OnReproduceSound(AudioClipGroup audioClipGroup)
+        public void ReproduceClip(AudioClip clip)
         {
-            ReproduceClip(_audioSource, audioClipGroup.GetRandomClip(), audioClipGroup.IsLoopTime);
+            IsPlaying = true;
+            _audioSource.Stop();
+            _audioSource.time = 0f;
+            _audioSource.clip = clip;
+            _audioSource.Play();
+
+            StartCoroutine(FinishedPlaying(clip.length));
         }
 
-        private static void ReproduceClip(AudioSource audioSource, AudioClip clip, bool isLoop)
+        private IEnumerator FinishedPlaying(float clipLength)
         {
-            audioSource.Stop();
-            audioSource.loop = isLoop;
-            audioSource.clip = clip;
-            audioSource.Play();
+            yield return new WaitForSeconds(clipLength);
+            IsPlaying = false;
         }
     }
 }

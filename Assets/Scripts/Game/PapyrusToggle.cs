@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Audio;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,15 +10,13 @@ namespace Game
     {
         [SerializeField] private float menuAnimationTime;
         [SerializeField] private Button closeMenuButton;
-        [SerializeField] private AudioClip openMenuAudioClip;
-        [SerializeField] private AudioClip closeMenuAudioClip;
         [SerializeField] private Canvas canvas;
         [SerializeField] private float closeYPosition = -300f;
+        [SerializeField] private AudioEventChannel audioEventChannelFx;
         
         public UnityAction<bool> OnStartTogglePapyrus;
         private const float OpenYPosition = 0f;
         private bool _isAnimating;
-        private AudioSource _audioSource;
 
         public bool IsOpen { get; private set; }
 
@@ -34,16 +33,14 @@ namespace Game
         public void CloseMenuButton_clicked()
         {
             if (_isAnimating) return;
-            _audioSource.clip = closeMenuAudioClip;
-            _audioSource.Play();
+            audioEventChannelFx.ReproduceAudio(AudioClipGroupName.PapyrusClose);
             StartCoroutine(SwitchMenuDisplayMode());
         }
 
         public void OnMenuClickHandler()
         {
             if (_isAnimating || IsOpen) return;
-            _audioSource.clip = openMenuAudioClip;
-            _audioSource.Play();
+            audioEventChannelFx.ReproduceAudio(AudioClipGroupName.PapyrusOpen);
             StartCoroutine(SwitchMenuDisplayMode());
         }
 
@@ -79,8 +76,6 @@ namespace Game
         {
             closeMenuButton.gameObject.SetActive(false);
             // _closeYPosition = transform.position.y;
-
-            _audioSource = GetComponent<AudioSource>();
         }
     }
 }

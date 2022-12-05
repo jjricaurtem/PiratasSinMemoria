@@ -7,13 +7,8 @@ namespace Game
 {
     public class GenericMenuActionsController : MonoBehaviour
     {
-        [SerializeField] private AudioEventChannel musicAudioEventChannel;
         [SerializeField] private AudioEventChannel effectsAudioEventChannel;
         [SerializeField] private GameInformation gameInformation;
-        private void Start()
-        {
-            musicAudioEventChannel.ReproduceAudio(AudioClipGroupName.Intro);
-        }
 
         public void OpenUrl(string url)
         {

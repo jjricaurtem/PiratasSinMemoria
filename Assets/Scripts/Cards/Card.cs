@@ -1,10 +1,10 @@
 using System;
+using Audio;
 using Commons.Events;
 using JetBrains.Annotations;
 using Tables;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Random = UnityEngine.Random;
 
 namespace Cards
 {
@@ -15,10 +15,9 @@ namespace Cards
         private static readonly int TurnCardSideDown = Animator.StringToHash("TurnCardSideDown");
         private static readonly int RemoveCard = Animator.StringToHash("RemoveCard");
         public TableEventChannel tableEventChannel;
-        [SerializeField] private AudioClip[] cardClickedAudioClips;
+        [SerializeField] private AudioEventChannel audioEventChannelFx;
 
         private Animator _animator;
-        private AudioSource _audioSource;
         private int _cardIndex;
         private CardSo _cardSo;
         private SpriteRenderer _frontSpriteRenderer;
@@ -33,7 +32,6 @@ namespace Cards
         private void OnEnable()
         {
             _animator = GetComponent<Animator>();
-            _audioSource = GetComponent<AudioSource>();
             if (_cardIndex < 0) throw new Exception("No index defined for this card " + name);
             _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
             _frontSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -50,8 +48,7 @@ namespace Cards
         public void OnPointerClick(PointerEventData eventData)
         {
             if (Matched || _isCardUp || !_interactionEnable) return;
-            _audioSource.clip = cardClickedAudioClips[Random.Range(0, cardClickedAudioClips.Length)];
-            _audioSource.Play();
+            audioEventChannelFx.ReproduceAudio(AudioClipGroupName.Click);
             tableEventChannel.SetCardsInteractionActive(false);
             _animator.SetTrigger(TurnCardSideUp);
             _isCardUp = true;
@@ -79,7 +76,7 @@ namespace Cards
         public void CardAnimationStarted()
         {
             SetVisible(true);
-            _audioSource.Play();
+            audioEventChannelFx.ReproduceAudio(AudioClipGroupName.CardDeal);
         }
 
         public void TurnCardDown()
