@@ -55,7 +55,8 @@ namespace Game
             {
                 isAWin = gameInformation.playerCoins[0] != gameInformation.playerCoins[1];
                 imageElement.sprite = isAWin ? victorySprite : drawSprite;
-                playerNameText.text = _currentPlayerNumber > 0 ? $"¡Player {_currentPlayerNumber} Wins!" : "";
+                var winnerPlayerNumber = _currentPlayerNumber == 1 ? 2 : 1;
+                playerNameText.text = $"¡Player {winnerPlayerNumber} Wins!";
             }
             else
             {
