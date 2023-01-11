@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Audio
 {
@@ -8,10 +7,6 @@ namespace Audio
     {
         [SerializeField] private AudioEventChannel audioEventChannel;
         private AudioSource _audioSource;
-
-        private void Start()
-        {
-        }
 
         private void OnEnable()
         {
